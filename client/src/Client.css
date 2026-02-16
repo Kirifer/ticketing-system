@@ -7,6 +7,19 @@
   --card-bg: #ffffff;
 }
 
+/* ===================================== */
+/* GLOBAL IMPROVEMENTS */
+/* ===================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -161,4 +174,128 @@ body {
   text-align: center;
   width: 340px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+
+/* ===================================== */
+/* TABLET (1024px and below) */
+/* ===================================== */
+
+@media (max-width: 1024px) {
+
+  .nav-bar {
+    padding: 1rem 5%;
+  }
+
+  .main-container {
+    padding: 40px 4%;
+    gap: 20px;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+}
+
+/* ===================================== */
+/* MOBILE (768px and below) */
+/* ===================================== */
+
+@media (max-width: 768px) {
+
+  /* Navigation */
+  .nav-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 1rem 4%;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-bar > div:last-child {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+  }
+
+  .nav-btn {
+    flex: 1;
+    margin-left: 0;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Form Row Stack */
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Cards */
+  .main-container {
+    flex-direction: column;
+    padding: 30px 4%;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .input-field {
+    font-size: 14px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 90%;
+    padding: 25px;
+  }
+
+}
+
+/* ===================================== */
+/* SMALL MOBILE (480px and below) */
+/* ===================================== */
+
+@media (max-width: 480px) {
+
+  .logo-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .nav-logo {
+    height: 32px;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .main-container {
+    padding: 20px 3%;
+  }
+
+  .card {
+    border-radius: 12px;
+  }
+
+  .track-info-box {
+    font-size: 0.85rem;
+  }
+
 }
