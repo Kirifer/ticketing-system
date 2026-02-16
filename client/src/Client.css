@@ -1,0 +1,164 @@
+/* Client.css - Modern Support Portal Design */
+:root {
+  --primary: #004a99;
+  --secondary: #28a745;
+  --bg: #f8fafc;
+  --text: #1e293b;
+  --card-bg: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Navigation */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 8%;
+  background: linear-gradient(135deg, #003366 0%, #004a99 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  margin-left: 12px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-btn:hover {
+  background: white;
+  color: var(--primary);
+}
+
+/* Container & Cards */
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 50px 5%;
+  justify-content: center;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #e2e8f0;
+}
+
+.card-title {
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+/* Form Elements */
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: border 0.3s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0,74,153,0.1);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Tracking Info Box */
+.track-info-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  width: 340px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
