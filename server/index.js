@@ -140,7 +140,7 @@ app.put('/api/admin/tickets/:id', async (req, res) => {
             from: `"ITSquarehub Support" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: `Update on Ticket: ${refNo}`,
-            text: `Hello, the status of your ticket (<b>${refNo}</b>) has been updated to: ${status}.`,
+            text: `Hello, the status of your ticket <b>${refNo}</b> has been updated to: ${status}.`,
         });
 
         res.json({ success: true, message: "Status updated successfully" });

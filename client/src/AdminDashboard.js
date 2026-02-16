@@ -246,6 +246,7 @@ const AdminDashboard = () => {
                         <div className="modal-body">
                             <p><b>Reference:</b> {selectedTicket.reference_no}</p>
                             <p><b>User:</b> {selectedTicket.full_name}</p>
+                            <p><b>Category:</b> {selectedTicket.category}</p>
                             <p><b>Subject:</b> {selectedTicket.subject}</p>
                             <p><b>Description:</b> {selectedTicket.description}</p>
 
