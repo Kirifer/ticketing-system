@@ -93,16 +93,20 @@
 
 .admin-th {
     padding: 15px 20px;
-    color: #666;
+    color: #0a0a0a;
     font-size: 13px;
     text-align: left;
     border-bottom: 2px solid #edf2f7;
+    text-align: center;
 }
 
 .admin-td {
-    padding: 15px 20px;
-    font-size: 14px;
+    padding: 13px 17px;
+    font-size: 13px;
+    font-weight: 400;
     border-bottom: 1px solid #edf2f7;
+    width: 50px;
+    text-align: center;
 }
 
 .status-badge {
@@ -120,6 +124,7 @@
     border: none;
     border-radius: 6px;
     margin-right: 8px;
+    margin: 5px;
 }
 
 .admin-select {
