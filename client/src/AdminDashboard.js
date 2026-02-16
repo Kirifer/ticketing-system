@@ -43,6 +43,7 @@ const AdminDashboard = () => {
         } finally {
             setIsLoggingIn(false);
         }
+        setPass('');
     };
 
     const handleStatus = async (id, status, email, ref) => {
