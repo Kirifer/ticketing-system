@@ -9,6 +9,10 @@ const AdminDashboard = () => {
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+
+    const [statusFilter, setStatusFilter] = useState('All');
+    const [priorityFilter, setPriorityFilter] = useState('All');
+
     useEffect(() => {
         if (auth) fetchTickets();
     }, [auth]);
@@ -50,11 +54,36 @@ const AdminDashboard = () => {
         }
     };
 
+  
+    const getPriorityStyle = (priority) => {
+        switch (priority) {
+            case 'Critical': return { color: '#d63031', fontWeight: 'bold' };
+            case 'High': return { color: '#e17055', fontWeight: 'bold' };
+            case 'Mid': return { color: '#08528b', fontWeight: 'bold' };
+            case 'Low': return { color: '#2a2e2f', fontWeight: 'bold' };
+            default: return { color: '#0c0c0c' };
+        }
+    };
+
+
+    const filteredTickets = tickets.filter(t => {
+        const matchesStatus = statusFilter === 'All' || t.status === statusFilter;
+        const matchesPriority = priorityFilter === 'All' || t.priority === priorityFilter;
+        return matchesStatus && matchesPriority;
+    });
+
     if (!auth) return (
         <div className="login-wrapper">
             <div className="login-box">
-                <h2 style={{ color: '#004a99', marginTop: 0 }}>ITSquarehub Admin</h2>
-                <p style={{ color: '#666', fontSize: 14 }}>Please sign in to manage tickets</p>
+
+                <h2 style={{ color: '#004a99', marginTop: 0 }}>
+                    ITSquarehub Admin
+                </h2>
+
+                <p style={{ color: '#666', fontSize: 14 }}>
+                    Please sign in to manage tickets
+                </p>
+
                 <input 
                     type="password" 
                     placeholder="Admin Password" 
@@ -63,6 +92,7 @@ const AdminDashboard = () => {
                     onChange={e => setPass(e.target.value)} 
                     onKeyPress={e => e.key === 'Enter' && handleLogin()}
                 />
+                
                 <button 
                     onClick={handleLogin} 
                     disabled={isLoggingIn}
@@ -97,6 +127,29 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
+
+            <div className="filter-toolbar" style={{ display: 'flex', gap: '20px', marginBottom: '20px', padding: '10px', background: '#f4f7f6', borderRadius: '5px' }}>
+                <div>
+                    <span style={{ fontSize: '14px', fontWeight: 'bold', marginRight: '10px' }}>Filter Status:</span>
+                    <select className="admin-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="On-Going">On-Going</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+                <div>
+                    <span style={{ fontSize: '14px', fontWeight: 'bold', marginRight: '10px' }}>Filter Priority:</span>
+                    <select className="admin-select" value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value)}>
+                        <option value="All">All Priorities</option>
+                        <option value="Low">Low</option>
+                        <option value="Mid">Mid</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                    </select>
+                </div>
+            </div>
+
             <div className="table-wrapper">
                 <table className="admin-tbl">
                     <thead>
@@ -105,54 +158,104 @@ const AdminDashboard = () => {
                             <th className="admin-th">Full Name</th>
                             <th className="admin-th">Category</th>
                             <th className="admin-th">Status</th>
+                            <th className="admin-th">Priority</th>
+                            <th className="admin-th">Date Submitted</th>
                             <th className="admin-th">Action</th>
+                            <th className="admin-th">Date Resolved</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {tickets.map(t => (
-                            <tr key={t.id}>
-                                <td className="admin-td"><b>{t.reference_no}</b></td>
-                                <td className="admin-td">{t.full_name}</td>
-                                <td className="admin-td">{t.category}</td>
-                                <td className="admin-td">
-                                    <span className="status-badge" style={{ backgroundColor: getStatusColor(t.status) }}>
-                                        {t.status}
-                                    </span>
-                                </td>
-                                <td className="admin-td">
-                                    <button onClick={() => setSelectedTicket(t)} className="view-btn">View</button>
-                                    <select 
-                                        className="admin-select"
-                                        value={t.status}
-                                        onChange={(e) => handleStatus(t.id, e.target.value, t.user_email, t.reference_no)}
-                                    >
-                                        <option value="Pending">Pending</option>
-                                        <option value="On-Going">On-Going</option>
-                                        <option value="Resolved">Resolved</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        ))}
+                        {filteredTickets
+                            .slice()
+                            .sort((a, b) => {
+                                if (a.status === 'Resolved' && b.status !== 'Resolved') return 1;
+                                if (a.status !== 'Resolved' && b.status === 'Resolved') return -1;
+
+                                return new Date(b.created_at) - new Date(a.created_at);
+                            })
+                            .map(t => (
+                                <tr>
+                                    <td className="admin-td"><b>{t.reference_no}</b></td>
+                                    <td className="admin-td">{t.full_name}</td>
+                                    <td className="admin-td">{t.category}</td>
+                                    <td className="admin-td">
+                                        <span className="status-badge" style={{ backgroundColor: getStatusColor(t.status) }}>
+                                            {t.status}
+                                        </span>
+                                    </td>
+                                    <td className="admin-td" style={getPriorityStyle(t.priority)}>
+                                        {t.priority}
+                                    </td>
+                                    
+                                    <td className="admin-td">
+                                        {t.created_at ? new Date(t.created_at).toLocaleDateString() : "N/A"} <br/>
+                                        <small style={{ color: '#151414' }}>
+                                            {t.created_at ? new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ""}
+                                        </small>
+                                    </td>
+
+                                    <td className="admin-td">
+                                        <div style={{ display: 'flex', gap: '5px' }}>
+                                            <button onClick={() => setSelectedTicket(t)} className="view-btn">View</button>
+                                            <select 
+                                                className="admin-select"
+                                                value={t.status}
+                                                onChange={(e) => handleStatus(t.id, e.target.value, t.user_email, t.reference_no)}
+                                            >
+                                                <option value="Pending">Pending</option>
+                                                <option value="On-Going">On-Going</option>
+                                                <option value="Resolved">Resolved</option>
+                                            </select>
+                                        </div>
+                                    </td>
+
+                                    <td className="admin-td">
+                                        {t.resolved_at ? (
+                                            <>
+                                                {new Date(t.resolved_at).toLocaleDateString()} <br/>
+                                                <small style={{ color: '#27ae60', fontWeight: 'bold' }}>
+                                                    {new Date(t.resolved_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </small>
+                                            </>
+                                        ) : (
+                                            <span style={{ color: '#ccc' }}>--</span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
+                {filteredTickets.length === 0 && (
+                    <div style={{ textAlign: 'center', padding: '30px', color: '#999' }}>
+                        No tickets found matching your filters.
+                    </div>
+                )}
             </div>
 
             {selectedTicket && (
+
                 <div className="admin-overlay">
                     <div className="admin-modal">
+
                         <div className="modal-header">
                             <h3 style={{ margin: 0 }}>Ticket Details</h3>
                             <button onClick={() => setSelectedTicket(null)} style={{background:'none', border:'none', cursor:'pointer', fontSize: 20}}>×</button>
                         </div>
+
                         <div className="modal-body">
+                            <p><b>Reference:</b> {selectedTicket.reference_no}</p>
                             <p><b>User:</b> {selectedTicket.full_name}</p>
+                            <p><b>Subject:</b> {selectedTicket.subject}</p>
                             <p><b>Description:</b> {selectedTicket.description}</p>
+
                             {selectedTicket.image_url && (
                                 <div style={{ marginTop: 10 }}>
-                                    <a href={selectedTicket.image_url} target="_blank" rel="noreferrer" style={{color: '#004a99', fontWeight: 'bold', textDecoration: 'none'}}>View Image ↗</a>
+                                    <a href={selectedTicket.image_url} target="_blank" rel="noreferrer" style={{color: '#004a99', fontWeight: 'bold', textDecoration: 'none'}}>View Attachment ↗</a>
                                 </div>
                             )}
+
                         </div>
+
                         <button onClick={() => setSelectedTicket(null)} className="modal-close-btn">Close</button>
                     </div>
                 </div>
