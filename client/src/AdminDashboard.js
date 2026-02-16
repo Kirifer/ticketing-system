@@ -79,7 +79,7 @@ const AdminDashboard = () => {
                 <h2 style={{ color: '#004a99', marginTop: 0 }}>
                     ITSquarehub Admin
                 </h2>
-                <img src='./its-logo.png' alt='its-logo'/>
+                <img className="admin-logo" src='./its-logo.png' alt='its-logo'/>
 
                 <p style={{ color: '#666', fontSize: 14 }}>
                     Please sign in to manage tickets
