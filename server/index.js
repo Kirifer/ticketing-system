@@ -140,7 +140,7 @@ app.put('/api/admin/tickets/:id', async (req, res) => {
             from: `"ITSquarehub Support" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: `Update on Ticket: ${refNo}`,
-            text: `Hello, the status of your ticket (${refNo}) has been updated to: ${status}.`,
+            text: `Hello, the status of your ticket (<b>${refNo}</b>) has been updated to: ${status}.`,
         });
 
         res.json({ success: true, message: "Status updated successfully" });
@@ -152,5 +152,5 @@ app.put('/api/admin/tickets/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });

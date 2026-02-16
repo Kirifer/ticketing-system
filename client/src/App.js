@@ -21,7 +21,15 @@ function App() {
     try {
       const res = await axios.post('http://localhost:5000/api/tickets', formData);
       setLoading(false);
-      setModal({ show: true, title: 'Success!', msg: `Ticket Created Successfully. Reference: ${res.data.reference_no}` });
+      setModal({ 
+        show: true, 
+        title: 'Success!', 
+        msg: (
+          <>
+            Ticket Created Successfully. Reference: <b>{res.data.reference_no}</b>
+          </>
+        )
+      });
     } catch (err) {
       setLoading(false);
       setModal({ show: true, title: 'Error', msg: 'Could not connect to server. Check if backend is running.' });
