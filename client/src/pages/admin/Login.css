@@ -2,7 +2,7 @@
 .Login-form-container {
   display: flex;
   flex-direction: column; /* Stack H1 and Form */
-  justify-content: center;
+  justify-content:flex-start;
   align-items: center;
   min-height: 100vh;
   background-color: #ffffff; /* Pure White */
