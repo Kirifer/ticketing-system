@@ -1,0 +1,114 @@
+/* Clean, Minimalist Reset */
+.Login-form-container {
+  display: flex;
+  flex-direction: column; /* Stack H1 and Form */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff; /* Pure White */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 20px;
+}
+
+/* Page Title (IT Squarehub) */
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: rgb(0, 72, 136);
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+/* Subtle, Bordered Form Card */
+form {
+  width: 100%;
+  max-width: 360px;
+  padding: 40px;
+  border: 1px solid #eaeaea; /* Light border defines the shape on white */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Logo-container {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.Logo-container img {
+  max-width: 100px;
+  height: auto;
+}
+
+/* Admin Badge Style */
+.admin-badge {
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin-bottom: 2rem;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Minimalist Inputs */
+input {
+  padding: 12px 0px; /* Zero horizontal padding for a "line" look, or 12px for standard */
+  padding-left: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #000; /* Sharp black focus for a professional touch */
+  background: #fafafa;
+}
+
+/* Professional Solid Button */
+.login-btn {
+  margin-top: 2rem;
+  background-color: #000; /* Pure black button on white background */
+  color: #fff;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.login-btn:hover {
+  opacity: 0.8;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+}
+.error-msg {
+  color: red;
+  text-align: center;
+}

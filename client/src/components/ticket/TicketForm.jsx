@@ -1,0 +1,155 @@
+import { useState } from 'react'
+import './TicketForm.css'
+import logo from '../../../ITS-LOGO-NOBG.png'
+import axios from "axios";
+
+function TicketForm(){
+    const [fileInputKey, setFileInputKey] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [ticket, setTicket] = useState({
+        name: '',
+        issue: '',
+        description: '',
+        priority: '',
+        status: '',
+        date: new Date().toLocaleDateString(),
+        image: '',
+        email: ''
+    });
+    function handleChange(e){
+        const {name, value } = e.target;
+        setTicket({
+            ...ticket,
+            [name]: value
+        });
+    }
+
+    async function handleSubmit(e){
+        e.preventDefault();
+
+        const newTicketRef ='ITS-' + crypto.randomUUID().slice(0, 8).toUpperCase();
+        const formData = new FormData();
+
+        formData.append("name", ticket.name);
+        formData.append("issue", ticket.issue);
+        formData.append("description", ticket.description);
+        formData.append("priority", ticket.priority);
+        formData.append("status", "Pending");    
+        formData.append("date", new Date().toLocaleDateString());
+        formData.append("ticketRef", newTicketRef);
+        formData.append("email", ticket.email);
+
+       if(selectedFile) {
+        formData.append("image", selectedFile);
+       }
+          try {
+                await axios.post("http://localhost:5000/api/tickets", formData, {
+                    headers: {
+                        "Content-Type": "Multipart/form-data"
+                    }
+                });
+                alert("Ticket submitted successfully!");
+                setTicket({
+                    name: '',
+                    issue: '',
+                    description: '',
+                    priority: '',
+                    status: '',
+                    date: new Date().toLocaleDateString(),
+                    email: ''
+                });
+                setSelectedFile(null);
+                setFileInputKey(null);
+
+            } catch (err) {
+                console.error(err);
+                alert("Submission failed.");
+            }
+    
+    }
+    return(
+        <div className='form-wrapper'>
+            <div className='form-container'>
+                <div className='logo-container'>
+                    <h1>IT Squarehub</h1>
+                    <img src={logo} alt="Logo" />
+                </div>
+                
+                <form onSubmit={handleSubmit}>
+                    <div className='input-container'>
+                        <label htmlFor="name">Name: </label>
+                        <input 
+                        type="text" 
+                        name="name"
+                        id='name'
+                        value={ticket.name}
+                        onChange={handleChange}
+                        placeholder='Enter your name'
+                        required
+                        />
+                    </div>
+                    <div className='input-container'>
+                        <label htmlFor="issue">Issue: </label>
+                        <select type="text"
+                        required 
+                        id='issue'
+                        name="issue"
+                        value={ticket.issue}
+                        onChange={handleChange}
+                        >
+                            <option value="">Chooose Below</option>
+                            <option value="hardware">Hardware</option>
+                            <option value="software">Software</option>
+                            <option value="network">Network</option>
+                        </select>
+                    </div>
+
+                    <div className='input-container'>
+                        <label htmlFor="priority">Priority</label>
+                        <select name="priority"
+                        id='priority'
+                        required
+                        value={ticket.priority}
+                        onChange={handleChange}
+                        >
+                            <option value="">Choose Below</option>
+                            <option value="low">Low Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                    </div>
+
+                    <div className='input-container'>
+                        <label htmlFor="description">Description: </label>
+                        <input type="text" name="description" placeholder='Describe the issue'
+                        id='description'
+                        required
+                        value={ticket.description}
+                        onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className='input-container'>
+                        <label htmlFor="email">Email: </label>
+                        <input type="email" name="email" id="email" 
+                        required
+                        value={ticket.email}
+                        onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className='input-container'>
+                        <input type="file"
+                        key={fileInputKey}
+                        required
+                        name='image'
+                        onChange={(e) => setSelectedFile(e.target.files[0])}
+                        />
+                        <button type='submit'>Submit Ticket</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+export default TicketForm;

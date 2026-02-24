@@ -1,0 +1,104 @@
+/* 2. Sticky Navbar Container */
+.nav-bar-container {
+    position: sticky;      /* Keeps it at the top */
+    top: 0;
+    z-index: 1000;         /* Ensures it stays on top of page content */
+    width: 100%;           
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* No horizontal padding here to avoid the scrollbar */
+}
+
+.nav-bar-container nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;        /* Centers the content */
+    height: 80px;
+    padding: 0 20px;       /* Padding inside the nav instead of container */
+}
+.left-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.first-name {
+    font-size: 1.2rem;
+    color: rgb(0, 72, 136);
+    font-weight: bold;
+    min-width: 40px;
+}
+.second-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 5px;
+}
+.left-panel img {
+    height: 65px;
+}
+/* 3. Link Styles */
+.right-panel {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.right-panel a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.right-panel a:hover {
+    color: #007bff;
+}
+
+/* Specific styling for Admin */
+.right-panel a[href="/admin/login"] {
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.right-panel a[href="/admin/login"]:hover {
+    background-color: #007bff;
+    color: white;
+}
+/* --- RESPONSIVE DESIGN --- */
+
+/* For Tablets and smaller (below 768px) */
+@media (max-width: 768px) {
+    .nav-bar-container nav {
+        height: 70px; /* Slightly shorter navbar */
+        padding: 0 15px;
+    }
+
+    .left-panel .logo {
+        height: 45px; /* Smaller logo for mobile */
+    }
+
+    .right-panel {
+        gap: 1rem; /* Less space between links */
+    }
+
+    .right-panel a {
+        font-size: 0.9rem; /* Smaller text */
+    }
+}
+
+/* For Mobile Phones (below 480px) */
+@media (max-width: 480px) {
+    .right-panel {
+        gap: 0.8rem;
+    }
+
+    /* Optional: If "Report a problem" is too long, you can change the text 
+       or hide the icon if you had one. For now, let's just make it compact. */
+    .right-panel a[href="/admin/login"] {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+}
