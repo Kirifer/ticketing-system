@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import NavBar from '../common/NavBar'
-function AdminLayout(){
+function AdminLoginLayout(){
     return(
         <>
             <title>Admin</title>
@@ -9,4 +9,4 @@ function AdminLayout(){
         </>
     );
 }
-export default AdminLayout;
+export default AdminLoginLayout;

@@ -1,12 +1,8 @@
-import "./AdminDashboard.css";
-import AdminHeader from "./AdminHeader";
-const AdminDashboard = () => {
-
-  return (
-    <>
-        <AdminHeader />
-    </>
-  );
-};
-
+import './AdminDashboard.css'
+function AdminDashboard(){
+    return(
+        <>
+        </>
+    );
+}
 export default AdminDashboard;
