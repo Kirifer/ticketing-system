@@ -86,9 +86,9 @@ button[type="submit"]:hover {
 }
 
 /* Dynamic Priority Colors */
-.ticket-card.high { border-left-color: #dc3545; }
-.ticket-card.medium { border-left-color: #ffc107; }
-.ticket-card.low { border-left-color: #28a745; }
+.ticket-card.High { border-left-color: #dc3545; }
+.ticket-card.Medium { border-left-color: #ffc107; }
+.ticket-card.Low { border-left-color: #28a745; }
 
 .card-footer {
     display: flex;

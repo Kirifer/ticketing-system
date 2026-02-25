@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const path = require('path'); 
 const cors = require("cors");
 const { Pool } = require("pg");
 const upload = require("./middleware/upload");
@@ -8,6 +9,8 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const app = express();
 
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(cors({
   origin: "http://localhost:5173",
@@ -165,6 +168,8 @@ app.post("/api/tickets", upload.single("image"), async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+//for ticket ref only
 app.get("/api/tickets/:ticketRef", async(req, res) => {
   try {
     const ticketRef = req.params.ticketRef.trim();
@@ -181,6 +186,18 @@ app.get("/api/tickets/:ticketRef", async(req, res) => {
     res.status(500).json({message: "Server Error"})
   }
 })
+
+//get all tickets
+app.get("/api/tickets", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM tickets ORDER BY date DESC");
+    res.json(result.rows); 
+  } catch(err) {
+    console.log(err.message);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 app.get("/check-auth", (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ authenticated: false });
@@ -200,6 +217,29 @@ app.get('/admin/dashboard/data', verifyAdmin, async (req, res) => {
   // only accessible if logged in
   res.json({ message: "Welcome Admin!" });
 });
+
+app.put("/api/tickets/:id/status", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    
+    const updated = await pool.query(
+      "UPDATE tickets SET status = $1 WHERE id = $2 RETURNING *",
+      [status, id]
+    );
+    res.json[updated.rows[0]];
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+
+
+
+
+
+
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");

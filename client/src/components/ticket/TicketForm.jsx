@@ -34,7 +34,7 @@ function TicketForm(){
         formData.append("issue", ticket.issue);
         formData.append("description", ticket.description);
         formData.append("priority", ticket.priority);
-        formData.append("status", "Pending");    
+        formData.append("status", "Open");    
         formData.append("date", new Date().toLocaleDateString());
         formData.append("ticketRef", newTicketRef);
         formData.append("email", ticket.email);
@@ -98,9 +98,9 @@ function TicketForm(){
                         onChange={handleChange}
                         >
                             <option value="">Chooose Below</option>
-                            <option value="hardware">Hardware</option>
-                            <option value="software">Software</option>
-                            <option value="network">Network</option>
+                            <option value="Hardware">Hardware</option>
+                            <option value="Software">Software</option>
+                            <option value="Network">Network</option>
                         </select>
                     </div>
 
@@ -113,9 +113,9 @@ function TicketForm(){
                         onChange={handleChange}
                         >
                             <option value="">Choose Below</option>
-                            <option value="low">Low Priority</option>
-                            <option value="medium">Medium Priority</option>
-                            <option value="high">High Priority</option>
+                            <option value="Low">Low Priority</option>
+                            <option value="Medium">Medium Priority</option>
+                            <option value="High">High Priority</option>
                         </select>
                     </div>
 
