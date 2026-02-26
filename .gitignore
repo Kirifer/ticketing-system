@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 # Hide the admin reset script
 server/resetAdminPassword.js
-# Don't show the images in uploads
-uploads/*
-!.gitkeep
+# Ignore everything in server/uploads
+server/uploads/*
+# Except the .gitkeep file
+!server/uploads/.gitkeep
