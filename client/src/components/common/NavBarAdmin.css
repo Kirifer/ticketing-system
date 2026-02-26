@@ -1,0 +1,51 @@
+/* NAV PANEL */
+.nav-panel-container {
+  background: #1e293b;
+  color: white;
+  padding: 20px;
+  position: relative;
+}
+.nav-panel-container a{
+  text-decoration: none;
+  color: white;
+}
+.hamburger {
+  width: 30px;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: white;
+  margin: 6px 0;
+  border-radius: 2px;
+}
+
+.nav-panel {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nav-panel span {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nav-panel span:hover {
+  color: #38bdf8;
+}
+
+.nav-panel button {
+  margin-top: 20px;
+  padding: 8px;
+  border: none;
+  background: #ef4444;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+

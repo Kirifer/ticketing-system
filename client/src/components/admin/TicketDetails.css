@@ -1,0 +1,86 @@
+.ticket-details-container {
+  background: #f8fafc;
+  padding: 20px;
+  border-left: 1px solid #e2e8f0;
+  overflow-y: auto;
+}
+
+.ticket-details {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-size: 14px;
+}
+
+.detail-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.detail-group label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.status-dropdown {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+}
+
+.description-section {
+  margin-top: 20px;
+}
+
+.description-section label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.description-section p {
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.attachment-section {
+  margin-top: 20px;
+}
+
+.attachment-box {
+  background: #e2e8f0;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.attachment-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}

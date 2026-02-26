@@ -1,3 +1,4 @@
+import './Tickets.css'
 function Tickets({tickets, setSelectedTicket}){
     return(
         <div className='tickets-container'>

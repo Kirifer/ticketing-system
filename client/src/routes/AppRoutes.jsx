@@ -2,11 +2,11 @@ import { Routes, Route } from 'react-router-dom'
 
 import AdminLoginLayout from '../components/layout/AdminLoginLayout'
 import UserLayout from '../components/layout/UserLayout'
-import AdminDashboardLayout from '../components/layout/AdminDashboardLayout'
-
+import AdminTicket from '../components/layout/admin/AdminTicket'
+import AdminDashboard from '../components/layout/admin/AdminDashboard'
+import AdminHistory from '../components/layout/admin/AdminHistory'
 import ProtectedRoute from './ProtectedRoute'
-
-import Login from '../pages/admin/Login'
+import Login from '../components/layout/admin/Login'
 import CreateTicket from '../pages/user/CreateTicket'
 
 function AppRoutes(){
@@ -25,7 +25,9 @@ function AppRoutes(){
 
             {/* Admin Protected Routes */}
             <Route element={<ProtectedRoute />}>
-                <Route path="admin/dashboard" element={<AdminDashboardLayout />} />
+                <Route path="admin/dashboard" element={<AdminDashboard />} />
+                <Route path="admin/tickets" element={<AdminTicket />} />
+                <Route path="admin/history" element={<AdminHistory />} />
             </Route>
 
             {/*Error 404*/}

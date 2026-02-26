@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import './NavBarAdmin.css'
 function NavBarAdmin(){
     const navigate = useNavigate();
     const handleLogout = async () => {
@@ -16,9 +18,15 @@ function NavBarAdmin(){
                     <span></span>
                 </div>
                 <div className='nav-panel'>
-                    <span>Dashboard</span>
-                    <span>Tickets</span>
-                    <span>History</span>
+                    <Link to='/admin/dashboard'>
+                        <span>Dashboard</span>
+                    </Link>
+                    <Link to='/admin/tickets'>
+                        <span>Tickets</span>
+                    </Link>
+                    <Link to='/admin/history'>
+                        <span>History</span>
+                    </Link>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
         </div>

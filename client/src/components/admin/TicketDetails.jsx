@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import './TicketDetails.css'
 function TicketDetails({setTickets, setSelectedTicket, selectedTicket}){
 const [lightboxImage, setLightboxImage] = useState(null);
     const updateStatus = async (newStatus) => {

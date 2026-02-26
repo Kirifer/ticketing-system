@@ -1,15 +1,15 @@
 import { useState } from "react";
-import './AdminDashboardLayout.css'
+import './AdminTicket.css'
 import { Outlet } from 'react-router-dom'
-import Tickets from "../../pages/admin/Tickets";
-import NavBarAdmin from "../common/NavBarAdmin";
-import TicketDetails from "../../pages/admin/TicketDetails";
-const AdminDashboardLayout = () => {
+import Tickets from "../../admin/Tickets";
+import NavBarAdmin from "../../common/NavBarAdmin";
+import TicketDetails from "../../admin/TicketDetails";
+const AdminTicket = () => {
 const [tickets, setTickets] = useState([]);
 const [selectedTicket, setSelectedTicket] = useState(null);
 
   return (
-    <div className="admin-dashboard-container">
+    <div className="admin-ticket-container">
         <NavBarAdmin />
         <Tickets 
         tickets={tickets}
@@ -25,4 +25,4 @@ const [selectedTicket, setSelectedTicket] = useState(null);
   );
 };
 
-export default AdminDashboardLayout;
+export default AdminTicket;
