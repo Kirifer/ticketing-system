@@ -7,17 +7,47 @@ function AdminDashboard(){
     const [selectedTicket, setSelectedTicket] = useState(null)
     const [lightboxImage, setLightboxImage] = useState(null);
     
+
+    const updateStatus = async (newStatus) => {
+        console.log("updateStatus is running");
+        setSelectedTicket(prev => ({ ...prev, status: newStatus }));
+
+        setTickets(prevTickets =>
+            prevTickets.map(ticket =>
+                ticket.id === selectedTicket.id
+                    ? { ...ticket, status: newStatus }
+                    : ticket
+            )
+        );
+
+        try {
+            await fetch(
+                `http://localhost:5000/api/tickets/${selectedTicket.id}/status`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status: newStatus }),
+                }
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     useEffect(() => {
         const fetchTickets = async () => {
             try {
                 const res = await fetch("http://localhost:5000/api/tickets", { credentials: 'include' });
                 const data = await res.json();
                 setTickets(data);
+                console.log("ALL TICKETS:", data);
             } catch(err) {
                 console.log(err);
             }
+            
         }
         fetchTickets();
+        
     }, []);
     const navigate = useNavigate();
     const handleLogout = async () => {
@@ -28,30 +58,6 @@ function AdminDashboard(){
         navigate("/admin/login");
     };
 
-    const updateStatus = async (newStatus) => {
-    try {
-        const res = await fetch(
-            `http://localhost:5000/api/tickets/${selectedTicket.id}/status`,
-            {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ status: newStatus }),
-            }
-            );
-
-            const updatedTicket = await res.json();
-            setSelectedTicket(updatedTicket);
-
-            setTickets(prevTickets =>
-            prevTickets.map(ticket =>
-                ticket.id === updatedTicket.id ? updatedTicket : ticket
-            )
-        );
-
-  } catch (err) {
-    console.log(err);
-  }
-};
     return(
         <div className='admin-dashboard-container'>
             <div className='nav-panel-container'>
@@ -86,7 +92,14 @@ function AdminDashboard(){
                     </thead>
                     <tbody>
                         {
-                            tickets.map(ticket => (
+                            [...tickets].sort((a, b) => {
+                                const priorityOrder = {
+                                    High: 3,
+                                    Medium: 2,
+                                    Low: 1
+                                };
+                                return priorityOrder[b.priority] - priorityOrder[a.priority];
+                            }).map(ticket => (
                             <tr key={ticket.ticket_ref} onClick={() => setSelectedTicket(ticket)}>
                                 <td>{ticket.ticket_ref}</td>
                                 <td>{ticket.name}</td>
@@ -135,6 +148,7 @@ function AdminDashboard(){
                             <select 
                             className="status-dropdown"
                             value={selectedTicket.status}
+                            onClick={(e) => e.stopPropagation()}
                             onChange={(e) => updateStatus(e.target.value)}
                             >
                             <option value=''>Select Status</option>

@@ -3,10 +3,10 @@ import { Outlet } from 'react-router-dom'
 const AdminDashboardLayout = () => {
 
   return (
-    <>
+    <div>
         <AdminDashboard />
         <Outlet />
-    </>
+    </div>
   );
 };
 
