@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { Link } from 'react-router-dom'
 import './StatusCard.css';
 
 function StatusCards() {
@@ -19,7 +20,6 @@ function StatusCards() {
       });
   }, []);
 
-  // === Status cards logic ===
   const statusMap = {
     Open: "Pending",
     InProgress: "In Progress",
@@ -46,17 +46,14 @@ function StatusCards() {
     { label: "Closed", count: counts.Closed, color: "#6BCB77" },
   ];
 
-  // === Last 7 days line chart ===
   const today = new Date();
   const last7Days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
     date.setDate(today.getDate() - (6 - i));
 
-    // Format: "Feb 20"
     const options = { month: "short", day: "numeric" };
     const dateLabel = date.toLocaleDateString("en-US", options);
 
-    // Count tickets for this day (DB format: M/D/YYYY)
     const dbDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     const count = tickets.filter(t => t.date === dbDate).length;
 
@@ -77,7 +74,10 @@ function StatusCards() {
         ))}
       </div>
 
-      <button className="manage-tickets-btn">Manage Tickets</button>
+      <Link to='/admin/tickets'>
+        <button className="manage-tickets-btn">Manage Tickets</button>
+      </Link>
+      
 
       <div className="line-chart-container">
         <h3 className="chart-title">Tickets Submitted (Last 7 Days)</h3>
