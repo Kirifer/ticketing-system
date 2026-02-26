@@ -26,8 +26,4 @@ dist-ssr
 server/resetAdminPassword.js
 # Don't show the images in uploads
 uploads/*
-!uploads/.gitkeep
-uploads/*.png
-uploads/*.jpg
-uploads/*.jpeg
-uploads/*.gif
+!.gitkeep

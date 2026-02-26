@@ -19,6 +19,7 @@ function StatusCards() {
       });
   }, []);
 
+  // === Status cards logic ===
   const statusMap = {
     Open: "Pending",
     InProgress: "In Progress",
@@ -45,17 +46,22 @@ function StatusCards() {
     { label: "Closed", count: counts.Closed, color: "#6BCB77" },
   ];
 
-const last7Days = Array.from({ length: 7 }, (_, i) => {
-  const date = new Date();
-  date.setDate(date.getDate() - (6 - i));
+  // === Last 7 days line chart ===
+  const today = new Date();
+  const last7Days = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(today.getDate() - (6 - i));
 
-  // Convert to M/D/YYYY format to match your DB
-  const dateString = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    // Format: "Feb 20"
+    const options = { month: "short", day: "numeric" };
+    const dateLabel = date.toLocaleDateString("en-US", options);
 
-  const count = tickets.filter(t => t.date === dateString).length;
+    // Count tickets for this day (DB format: M/D/YYYY)
+    const dbDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    const count = tickets.filter(t => t.date === dbDate).length;
 
-  return { date: dateString, count };
-});
+    return { date: dateLabel, count };
+  });
 
   if (loading) return <div className="status-cards-wrapper">Loading...</div>;
   if (tickets.length === 0) return <div className="status-cards-wrapper">No tickets yet</div>;
@@ -70,18 +76,25 @@ const last7Days = Array.from({ length: 7 }, (_, i) => {
           </div>
         ))}
       </div>
+
       <button className="manage-tickets-btn">Manage Tickets</button>
 
-      {/* Line Chart for last 7 days */}
       <div className="line-chart-container">
         <h3 className="chart-title">Tickets Submitted (Last 7 Days)</h3>
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={last7Days} margin={{ top: 20, right: 20, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
-            <YAxis allowDecimals={false} />
+            <YAxis allowDecimals={false} domain={[0, 'dataMax + 2']} />
             <Tooltip />
-            <Line type="monotone" dataKey="count" stroke="#4D96FF" strokeWidth={3} dot={{ r: 5 }} />
+            <Line
+              type="monotone"
+              dataKey="count"
+              stroke="#4D96FF"
+              strokeWidth={3}
+              dot={{ r: 5 }}
+              activeDot={{ r: 7 }}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
