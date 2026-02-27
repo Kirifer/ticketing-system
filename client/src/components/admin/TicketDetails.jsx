@@ -2,8 +2,32 @@ import { useState, useEffect } from "react";
 import './TicketDetails.css'
 function TicketDetails({setTickets, setSelectedTicket, selectedTicket}){
 const [lightboxImage, setLightboxImage] = useState(null);
+
+    const updatePriority = async (newPriority) => {
+        setSelectedTicket(prev => ({ ...prev, priority: newPriority }));
+
+        setTickets(prevTickets =>
+            prevTickets.map(ticket =>
+                ticket.id === selectedTicket.id
+                    ? { ...ticket, priority: newPriority }
+                    : ticket
+            )
+        );
+        try {
+            await fetch(
+                `http://localhost:5000/api/tickets/${selectedTicket.id}/priority`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ priority: newPriority }),
+                }
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    
     const updateStatus = async (newStatus) => {
-    console.log("updateStatus is running");
     setSelectedTicket(prev => ({ ...prev, status: newStatus }));
     setTickets(prevTickets =>
         prevTickets.map(ticket =>
@@ -32,7 +56,6 @@ const [lightboxImage, setLightboxImage] = useState(null);
                 const res = await fetch("http://localhost:5000/api/tickets", { credentials: 'include' });
                 const data = await res.json();
                 setTickets(data);
-                console.log("ALL TICKETS:", data);
             } catch(err) {
                 console.log(err);
             }
@@ -66,9 +89,16 @@ const [lightboxImage, setLightboxImage] = useState(null);
 
                 <div className="detail-group">
                     <label>Priority:</label>
-                    <span className={`priority ${selectedTicket.priority.toLowerCase()}`}>
-                    {selectedTicket.priority}
-                    </span>
+                    <select
+                        className="priority-dropdown"
+                        value={selectedTicket.priority}
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={(e) => updatePriority(e.target.value)}
+                    >
+                        <option value='Low'>Low</option>
+                        <option value='Medium'>Medium</option>
+                        <option value='High'>High</option>
+                    </select>
                 </div>
 
                 <div className="detail-group">

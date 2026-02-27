@@ -217,7 +217,21 @@ app.get('/admin/dashboard/data', verifyAdmin, async (req, res) => {
   // only accessible if logged in
   res.json({ message: "Welcome Admin!" });
 });
+app.put("/api/tickets/:id/priority", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { priority } = req.body;
 
+    const updated = await pool.query(
+      "UPDATE tickets SET priority = $1 WHERE id = $2 RETURNING *",
+      [priority, id]
+    );
+    res.json(updated.rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({message: "Server Error"});
+  }
+});
 app.put("/api/tickets/:id/status", async (req, res) => {
   try {
     const { id } = req.params;
