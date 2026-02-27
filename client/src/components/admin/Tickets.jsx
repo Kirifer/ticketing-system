@@ -9,7 +9,7 @@ function Tickets({tickets, setSelectedTicket}){
                 <table className="tickets-table">
                     <thead>
                         <tr>
-                            <th>Ref #</th>
+                            <th>REFERENCE ID</th>
                             <th>Name</th>
                             <th>Issue</th>
                             <th>Priority</th>

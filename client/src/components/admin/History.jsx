@@ -22,7 +22,7 @@ function History() {
 
             <div className="history-table">
             <div className="history-header">
-                <span>REF #</span>
+                <span>Reference ID</span>
                 <span>Date & Time</span>
                 <span>Action</span>
                 <span>From</span>
