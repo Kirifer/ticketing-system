@@ -224,10 +224,11 @@ app.put("/api/tickets/:id/priority", async (req, res) => {
     const { priority } = req.body;
 
     const current = await pool.query(
-      "SELECT priority FROM tickets WHERE id = $1",
+      "SELECT priority, ticket_ref FROM tickets WHERE id = $1",
       [id]
     );
     const oldPriority = current.rows[0].priority;
+    const ticketRef = current.rows[0].ticket_ref;
 
     const updated = await pool.query(
       "UPDATE tickets SET priority = $1 WHERE id = $2 RETURNING *",
@@ -235,9 +236,9 @@ app.put("/api/tickets/:id/priority", async (req, res) => {
     );
 
     await pool.query(
-      `INSERT INTO "adminLogs" (ticket_id, action, old_value, new_value)
-       VALUES ($1, $2, $3, $4)`,
-      [id, "Priority Change", oldPriority, priority]
+      `INSERT INTO "adminLogs" (ticket_id, ticket_ref, action, old_value, new_value)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [id, ticketRef, "Priority Change", oldPriority, priority]
     );
 
     res.json(updated.rows[0]);
@@ -247,26 +248,28 @@ app.put("/api/tickets/:id/priority", async (req, res) => {
     res.status(500).json({message: "Server Error"});
   }
 });
+
 app.put("/api/tickets/:id/status", async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
 
-    // 1️⃣ Get old status
     const current = await pool.query(
-      "SELECT status FROM tickets WHERE id = $1",
+      "SELECT status, ticket_ref FROM tickets WHERE id = $1",
       [id]
     );
     const oldStatus = current.rows[0].status;
+    const ticketRef = current.rows[0].ticket_ref;
 
     const updated = await pool.query(
       "UPDATE tickets SET status = $1 WHERE id = $2 RETURNING *",
       [status, id]
     );
+
     await pool.query(
-      `INSERT INTO "adminLogs" (ticket_id, action, old_value, new_value)
-       VALUES ($1, $2, $3, $4)`,
-      [id, "Status Change", oldStatus, status]
+      `INSERT INTO "adminLogs" (ticket_id, ticket_ref, action, old_value, new_value)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [id, ticketRef, "Status Change", oldStatus, status]
     );
 
     res.json(updated.rows[0]);

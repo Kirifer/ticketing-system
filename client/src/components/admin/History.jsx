@@ -22,6 +22,7 @@ function History() {
 
             <div className="history-table">
             <div className="history-header">
+                <span>REF #</span>
                 <span>Date & Time</span>
                 <span>Action</span>
                 <span>From</span>
@@ -30,6 +31,7 @@ function History() {
 
             {logs.map(log => (
             <div key={log.id} className="history-row">
+                <span>{log.ticket_ref}</span>
                 <span>{new Date(log.created_at).toLocaleString()}</span>
                 <span>{log.action}</span>
                 <span>{log.old_value}</span>
