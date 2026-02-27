@@ -217,16 +217,31 @@ app.get('/admin/dashboard/data', verifyAdmin, async (req, res) => {
   // only accessible if logged in
   res.json({ message: "Welcome Admin!" });
 });
+
 app.put("/api/tickets/:id/priority", async (req, res) => {
   try {
     const { id } = req.params;
     const { priority } = req.body;
 
+    const current = await pool.query(
+      "SELECT priority FROM tickets WHERE id = $1",
+      [id]
+    );
+    const oldPriority = current.rows[0].priority;
+
     const updated = await pool.query(
       "UPDATE tickets SET priority = $1 WHERE id = $2 RETURNING *",
       [priority, id]
     );
+
+    await pool.query(
+      `INSERT INTO "adminLogs" (ticket_id, action, old_value, new_value)
+       VALUES ($1, $2, $3, $4)`,
+      [id, "Priority Change", oldPriority, priority]
+    );
+
     res.json(updated.rows[0]);
+
   } catch (err) {
     console.log(err);
     res.status(500).json({message: "Server Error"});
@@ -236,12 +251,26 @@ app.put("/api/tickets/:id/status", async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    
+
+    // 1️⃣ Get old status
+    const current = await pool.query(
+      "SELECT status FROM tickets WHERE id = $1",
+      [id]
+    );
+    const oldStatus = current.rows[0].status;
+
     const updated = await pool.query(
       "UPDATE tickets SET status = $1 WHERE id = $2 RETURNING *",
       [status, id]
     );
-    res.json[updated.rows[0]];
+    await pool.query(
+      `INSERT INTO "adminLogs" (ticket_id, action, old_value, new_value)
+       VALUES ($1, $2, $3, $4)`,
+      [id, "Status Change", oldStatus, status]
+    );
+
+    res.json(updated.rows[0]);
+
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Server Error" });
@@ -249,11 +278,20 @@ app.put("/api/tickets/:id/status", async (req, res) => {
 });
 
 
-
-
-
-
-
+app.get("/api/admin-logs", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT al.*, t.ticket_ref 
+       FROM "adminLogs" al
+       LEFT JOIN tickets t ON t.id = al.ticket_id
+       ORDER BY al.created_at DESC`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
