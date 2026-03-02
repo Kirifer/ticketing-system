@@ -2,11 +2,14 @@
     padding: 30px;
     background-color: #f8fafc;
     min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .history-title {
     margin-bottom: 20px;
     color: #1e293b;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .history-table {
@@ -22,21 +25,60 @@
     grid-template-columns: 1.5fr 2fr 1.5fr 1.5fr 1.5fr;
     padding: 15px 20px;
     align-items: center;
+    word-break: break-word;
 }
+
 
 .history-header {
     background-color: #0f172a;
     color: white;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .history-row {
     border-bottom: 1px solid #e2e8f0;
     font-size: 14px;
     color: #334155;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .history-row:hover {
     background-color: #f1f5f9;
-    transition: 0.2s ease;
+}
+
+.history-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.history-pagination button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.history-pagination button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.history-pagination button:hover:not(:disabled) {
+    background-color: #357ab8;
+    transform: scale(1.05);
+}
+
+.history-pagination span {
+    font-weight: 500;
+    color: #1e293b;
 }

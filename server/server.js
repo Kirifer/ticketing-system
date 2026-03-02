@@ -223,10 +223,14 @@ app.put("/api/tickets/:id/priority", async (req, res) => {
     const { id } = req.params;
     const { priority } = req.body;
 
+   
     const current = await pool.query(
       "SELECT priority, ticket_ref FROM tickets WHERE id = $1",
       [id]
     );
+    
+    if (current.rows.length === 0) return res.status(404).json({message: "Ticket not found"});
+
     const oldPriority = current.rows[0].priority;
     const ticketRef = current.rows[0].ticket_ref;
 
@@ -236,15 +240,15 @@ app.put("/api/tickets/:id/priority", async (req, res) => {
     );
 
     await pool.query(
-      `INSERT INTO "adminLogs" (ticket_id, ticket_ref, action, old_value, new_value)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [id, ticketRef, "Priority Change", oldPriority, priority]
+      `INSERT INTO "adminLogs" (ticket_ref, action, old_value, new_value)
+       VALUES ($1, $2, $3, $4)`,
+      [ticketRef, "Priority Change", oldPriority, priority]
     );
 
     res.json(updated.rows[0]);
 
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({message: "Server Error"});
   }
 });
@@ -258,6 +262,9 @@ app.put("/api/tickets/:id/status", async (req, res) => {
       "SELECT status, ticket_ref FROM tickets WHERE id = $1",
       [id]
     );
+
+    if (current.rows.length === 0) return res.status(404).json({message: "Ticket not found"});
+
     const oldStatus = current.rows[0].status;
     const ticketRef = current.rows[0].ticket_ref;
 
@@ -267,31 +274,27 @@ app.put("/api/tickets/:id/status", async (req, res) => {
     );
 
     await pool.query(
-      `INSERT INTO "adminLogs" (ticket_id, ticket_ref, action, old_value, new_value)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [id, ticketRef, "Status Change", oldStatus, status]
+      `INSERT INTO "adminLogs" (ticket_ref, action, old_value, new_value)
+       VALUES ($1, $2, $3, $4)`,
+      [ticketRef, "Status Change", oldStatus, status]
     );
 
     res.json(updated.rows[0]);
 
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: "Server Error" });
   }
 });
 
-
 app.get("/api/admin-logs", async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT al.*, t.ticket_ref 
-       FROM "adminLogs" al
-       LEFT JOIN tickets t ON t.id = al.ticket_id
-       ORDER BY al.created_at DESC`
+      `SELECT * FROM "adminLogs" ORDER BY created_at DESC`
     );
     res.json(result.rows);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: "Server Error" });
   }
 });

@@ -3,52 +3,56 @@ import './TicketDetails.css'
 function TicketDetails({setTickets, setSelectedTicket, selectedTicket}){
 const [lightboxImage, setLightboxImage] = useState(null);
 
-    const updatePriority = async (newPriority) => {
-        setSelectedTicket(prev => ({ ...prev, priority: newPriority }));
+  const updatePriority = async (newPriority) => {
+    if (!selectedTicket) return; 
 
-        setTickets(prevTickets =>
-            prevTickets.map(ticket =>
-                ticket.id === selectedTicket.id
-                    ? { ...ticket, priority: newPriority }
-                    : ticket
-            )
-        );
-        try {
-            await fetch(
-                `http://localhost:5000/api/tickets/${selectedTicket.id}/priority`,
-                {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ priority: newPriority }),
-                }
-            );
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    
-    const updateStatus = async (newStatus) => {
+    const ticketId = selectedTicket.id; 
+
+    setSelectedTicket(prev => ({ ...prev, priority: newPriority }));
+    setTickets(prevTickets =>
+        prevTickets.map(ticket =>
+            ticket.id === ticketId
+                ? { ...ticket, priority: newPriority }
+                : ticket
+        )
+    );
+
+    try {
+        await fetch(`http://localhost:5000/api/tickets/${ticketId}/priority`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ priority: newPriority }),
+        });
+    } catch (err) {
+        console.log("Failed to update priority:", err);
+    }
+};
+
+const updateStatus = async (newStatus) => {
+    if (!selectedTicket) return; 
+
+    const ticketId = selectedTicket.id; 
+
     setSelectedTicket(prev => ({ ...prev, status: newStatus }));
     setTickets(prevTickets =>
         prevTickets.map(ticket =>
-            ticket.id === selectedTicket.id
+            ticket.id === ticketId
                 ? { ...ticket, status: newStatus }
                 : ticket
         )
     );
+
     try {
-        await fetch(
-            `http://localhost:5000/api/tickets/${selectedTicket.id}/status`,
-            {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ status: newStatus }),
-            }
-        );
+        await fetch(`http://localhost:5000/api/tickets/${ticketId}/status`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+        });
     } catch (err) {
-        console.log(err);
+        console.log("Failed to update status:", err);
+        
     }
-    };
+};
 
     useEffect(() => {
         const fetchTickets = async () => {

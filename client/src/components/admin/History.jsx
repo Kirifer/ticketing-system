@@ -1,44 +1,80 @@
-import { useEffect, useState } from 'react'
-import './History.css'
+import { useEffect, useState } from 'react';
+import './History.css';
 
 function History() {
     const [logs, setLogs] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const logsPerPage = 10;
+
     useEffect(() => {
         const fetchLogs = async () => {
             try {
                 const res = await fetch("http://localhost:5000/api/admin-logs");
                 const data = await res.json();
                 setLogs(data);
-            } catch (err){
+            } catch (err) {
                 console.log(err);
             }
         };
         fetchLogs();
     }, []);
 
+    const indexOfLastLog = currentPage * logsPerPage;
+    const indexOfFirstLog = indexOfLastLog - logsPerPage;
+    const currentLogs = logs.slice(indexOfFirstLog, indexOfLastLog);
+
+    const totalPages = Math.ceil(logs.length / logsPerPage);
+
+    const handleNext = () => {
+        if (currentPage < totalPages) setCurrentPage(prev => prev + 1);
+    };
+
+    const handlePrev = () => {
+        if (currentPage > 1) setCurrentPage(prev => prev - 1);
+    };
+
     return (
         <div className="history-container">
             <h1 className="history-title">Admin Activity Logs</h1>
 
             <div className="history-table">
-            <div className="history-header">
-                <span>Reference ID</span>
-                <span>Date & Time</span>
-                <span>Action</span>
-                <span>From</span>
-                <span>To</span>
-            </div>
+                <div className="history-header">
+                    <span>Reference ID</span>
+                    <span>Date & Time</span>
+                    <span>Action</span>
+                    <span>From</span>
+                    <span>To</span>
+                </div>
 
-            {logs.map(log => (
-            <div key={log.id} className="history-row">
-                <span>{log.ticket_ref}</span>
-                <span>{new Date(log.created_at).toLocaleString()}</span>
-                <span>{log.action}</span>
-                <span>{log.old_value}</span>
-                <span>{log.new_value}</span>
+                {currentLogs.map(log => (
+                    <div key={log.id} className="history-row">
+                        <span>{log.ticket_ref}</span>
+                        <span>{new Date(log.created_at).toLocaleString()}</span>
+                        <span>{log.action}</span>
+                        <span>{log.old_value}</span>
+                        <span>{log.new_value}</span>
+                    </div>
+                ))}
+
+                {logs.length === 0 && (
+                    <div className="history-row">
+                        <span colSpan="5" style={{ textAlign: 'center' }}>
+                            No logs available
+                        </span>
+                    </div>
+                )}
             </div>
-            ))}
-</div>
+            <div className="history-pagination">
+                <button onClick={handlePrev} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <span>
+                    Page {currentPage} of {totalPages}
+                </span>
+                <button onClick={handleNext} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
         </div>
     );
 }
