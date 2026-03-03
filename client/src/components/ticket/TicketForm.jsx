@@ -82,7 +82,7 @@ function TicketForm(){
                 {loading ? (
                     <div className="loader-container">
                         <div className="spinner"></div>
-                        <p className="loading-text">Verifying ID-REFERENCE...</p>
+                        <p className="loading-text">Uploading...</p>
                     </div>
                 ) : (
                     <form onSubmit={handleSubmit}>

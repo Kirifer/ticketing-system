@@ -6,10 +6,12 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [ loading , setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError('');
 
     try {
@@ -26,16 +28,24 @@ function Login() {
         return;
       }
 
-      navigate('/admin/dashboard'); // redirect on success
+      navigate('/admin/dashboard'); 
     } catch (err) {
       setError("Server error. Try again later.");
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="Login-form-container">
       <h1>IT Squarehub</h1>
+      {loading ? (
+                    <div className="loader-container">
+                        <div className="spinner"></div>
+                        <p className="loading-text">Verifying Admin Credentials...</p>
+                    </div>
+                ) : (
       <form onSubmit={handleSubmit}>
         <div className="Logo-container">
           <img src="../../../ITS-LOGO-NOBG.png" alt="ITS Logo" />
@@ -73,6 +83,7 @@ function Login() {
 
         <button type="submit" className="login-btn">Authenticate</button>
       </form>
+          )}
     </div>
   );
 }
