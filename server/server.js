@@ -136,7 +136,7 @@ app.post("/api/tickets", upload.single("image"), async (req, res) => {
                             <hr style="border:none; border-top:1px solid #e2e8f0; margin:20px 0;" />
 
                             <p style="font-size:14px; color:#64748b;">
-                              If you need further assistance, please reply to this email and include your ticket reference.
+                              If you need further assistance, go to the website and input your ticket reference.
                             </p>
 
                           </td>
