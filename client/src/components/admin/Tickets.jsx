@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import './Tickets.css';
 
-function Tickets({ tickets, setSelectedTicket }) {
+function Tickets({ tickets, setSelectedTicket, loading }) {
     const [searchId, setSearchId] = useState('');
 
     const displayedTickets = useMemo(() => {
@@ -31,7 +31,14 @@ function Tickets({ tickets, setSelectedTicket }) {
                     value={searchId}
                 />
             </div>
-
+            <div className="loader-container">
+                {loading && (
+                <>
+                <div className="spinner"></div>
+                <p className="loading-text">Logging Out</p>
+                </>
+                )}
+            </div>
             <table className="tickets-table">
                 <thead>
                     <tr>

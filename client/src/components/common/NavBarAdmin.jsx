@@ -1,14 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import './NavBarAdmin.css'
-function NavBarAdmin(){
+function NavBarAdmin({setLoading}){
     const navigate = useNavigate();
     const handleLogout = async () => {
+        setLoading(true);
         await fetch("http://localhost:5000/admin/logout", {
             method: "POST",
             credentials: "include"
         });
+        setTimeout(() => {
         navigate("/admin/login");
+        }, 2000);
     };
     return(
         <div className='nav-panel-container'>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './History.css';
 
-function History() {
+function History({loading}) {
     const [logs, setLogs] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const logsPerPage = 10;
@@ -45,7 +45,14 @@ function History() {
                     <span>From</span>
                     <span>To</span>
                 </div>
-
+                <div className="loader-container">
+                {loading && (
+                <>
+                <div className="spinner"></div>
+                <p className="loading-text">Logging Out</p>
+                </>
+                )}
+                </div>
                 {currentLogs.map(log => (
                     <div key={log.id} className="history-row">
                         <span>{log.ticket_ref}</span>

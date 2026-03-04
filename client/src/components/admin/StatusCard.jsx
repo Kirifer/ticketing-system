@@ -3,23 +3,22 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 import { Link } from 'react-router-dom'
 import './StatusCard.css';
 
-function StatusCards() {
+function StatusCards({loading}) {
   const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/tickets")
       .then(res => res.json())
       .then(data => {
         setTickets(data);
-        setLoading(false);
+        setLoader(false);
       })
       .catch(err => {
         console.error("Error fetching tickets:", err);
-        setLoading(false);
+        setLoader(false);
       });
   }, []);
-
   const statusMap = {
     Open: "Pending",
     InProgress: "In Progress",
@@ -60,7 +59,7 @@ function StatusCards() {
     return { date: dateLabel, count };
   });
 
-  if (loading) return <div className="status-cards-wrapper">Loading...</div>;
+  if (loader) return <div className="status-cards-wrapper">Loading...</div>;
   if (tickets.length === 0) return <div className="status-cards-wrapper">No tickets yet</div>;
 
   return (
@@ -77,7 +76,14 @@ function StatusCards() {
       <Link to='/admin/tickets'>
         <button className="manage-tickets-btn">Manage Tickets</button>
       </Link>
-      
+      <div className="loader-container">
+          {loading && (
+          <>
+          <div className="spinner"></div>
+          <p className="loading-text">Logging Out</p>
+          </>
+          )}
+        </div>
 
       <div className="line-chart-container">
         <h3 className="chart-title">Tickets Submitted (Last 7 Days)</h3>

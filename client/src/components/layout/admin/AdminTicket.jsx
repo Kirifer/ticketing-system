@@ -7,13 +7,17 @@ import TicketDetails from "../../admin/TicketDetails";
 const AdminTicket = () => {
 const [tickets, setTickets] = useState([]);
 const [selectedTicket, setSelectedTicket] = useState(null);
-
+const [loading, setLoading] = useState(false);
   return (
     <div className="admin-ticket-container">
-        <NavBarAdmin />
+        <NavBarAdmin 
+        loading={loading}
+        setLoading={setLoading}
+        />
         <Tickets 
         tickets={tickets}
         setSelectedTicket={setSelectedTicket}
+        loading={loading}
         />
         <TicketDetails 
         setTickets={setTickets}
