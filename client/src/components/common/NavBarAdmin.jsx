@@ -4,6 +4,7 @@ import './NavBarAdmin.css'
 import dashboardImg from '../../assets/dashboard.png'
 import historyImg from '../../assets/history.png'
 import ticketImg from '../../assets/ticket.png'
+import ITSlogo from '../../../ITS-LOGO-NOBG.png'
 function NavBarAdmin({setLoading}){
     const navigate = useNavigate();
     const handleLogout = async () => {
@@ -18,21 +19,22 @@ function NavBarAdmin({setLoading}){
     };
     return(
         <div className='nav-panel-container'>
-                <div className='nav-panel'>
-                    <Link to='/admin/dashboard'>
-                        <img src={dashboardImg} alt="Dashboard" className='admin-nav-icon'/>
-                        <span>Dashboard</span>
-                    </Link>
-                    <Link to='/admin/tickets'>
-                        <img src={ticketImg} alt="Tickets" className='admin-nav-icon'/>
-                        <span>Tickets</span>
-                    </Link>
-                    <Link to='/admin/history'>
-                        <img src={historyImg} alt="History" className='admin-nav-icon'/>
-                        <span>History</span>
-                    </Link>
-                    <button onClick={handleLogout}>Logout</button>
-                </div>
+            <img className='its-logo' src={ITSlogo} alt="Logo" />
+            <div className='nav-panel'>
+                <Link to='/admin/dashboard'>
+                    <img src={dashboardImg} alt="Dashboard" className='admin-nav-icon'/>
+                    <span>Dashboard</span>
+                </Link>
+                <Link to='/admin/tickets'>
+                    <img src={ticketImg} alt="Tickets" className='admin-nav-icon'/>
+                    <span>Tickets</span>
+                </Link>
+                <Link to='/admin/history'>
+                    <img src={historyImg} alt="History" className='admin-nav-icon'/>
+                    <span>History</span>
+                </Link>
+                <button onClick={handleLogout}>Logout</button>
+            </div>
         </div>
     );
 }

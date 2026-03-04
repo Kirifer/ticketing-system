@@ -1,87 +1,95 @@
+/* ===== Container ===== */
 .history-container {
-    padding: 30px;
-    background-color: #f8fafc;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 30px;
+  background-color: #f8fafc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 
+/* ===== Title ===== */
 .history-title {
-    margin-bottom: 20px;
-    color: #1e293b;
-    font-size: 28px;
-    font-weight: 600;
+  margin-bottom: 20px;
+  color: #1e293b;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center; 
 }
-
+/* ===== Table ===== */
 .history-table {
-    background: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border-radius: 8px;
+  overflow-x: auto; /* allow horizontal scroll on small screens */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
+/* Grid for rows and header */
 .history-header,
 .history-row {
-    display: grid;
-    grid-template-columns: 1.5fr 2fr 1.5fr 1.5fr 1.5fr;
-    padding: 15px 20px;
-    align-items: center;
-    word-break: break-word;
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1.5fr 1.5fr 1.5fr;
+  padding: 15px 20px;
+  align-items: center;
+  word-break: break-word;
 }
 
-
 .history-header {
-    background-color: #0f172a;
-    color: white;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  background-color: #0f172a;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .history-row {
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 14px;
-    color: #334155;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+  color: #334155;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .history-row:hover {
-    background-color: #f1f5f9;
+  background-color: #f1f5f9;
 }
 
+/* ===== Pagination ===== */
 .history-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+  flex-wrap: wrap; 
 }
 
 .history-pagination button {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    background-color: #4a90e2;
-    color: #fff;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4a90e2;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .history-pagination button:disabled {
-    background-color: #94a3b8;
-    cursor: not-allowed;
+  background-color: #94a3b8;
+  cursor: not-allowed;
 }
 
 .history-pagination button:hover:not(:disabled) {
-    background-color: #357ab8;
-    transform: scale(1.05);
+  background-color: #357ab8;
+  transform: scale(1.05);
 }
 
 .history-pagination span {
-    font-weight: 500;
-    color: #1e293b;
+  font-weight: 500;
+  color: #1e293b;
 }
+
 /* ===== Loader ===== */
 .loader-container {
   position: fixed;
@@ -121,5 +129,72 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .history-header,
+  .history-row {
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+  .history-pagination button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .history-header {
+    display: none;
+  }
+
+  .history-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-size: 14px;
+  }
+
+  .history-row span {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .history-row span::before {
+    font-weight: 600;
+    content: attr(data-label);
+    margin-right: 8px;
+    color: #1e293b;
+  }
+
+  .history-pagination {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .history-title {
+    font-size: 18px;
+  }
+  .history-header,
+  .history-row {
+    grid-template-columns: 1fr; 
+    padding: 8px;
+    font-size: 11px;
+  }
+  .history-row span::before {
+    font-size: 12px;
   }
 }

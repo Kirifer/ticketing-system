@@ -50,46 +50,47 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                 )}
             </div>
 
-            <table className="tickets-table">
-                <thead>
-                    <tr>
-                        <th>REFERENCE ID</th>
-                        <th>Name</th>
-                        <th>Issue</th>
-                        <th>Priority</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {displayedTickets.map(ticket => (
-                        <tr key={ticket.ticket_ref} onClick={() => setSelectedTicket(ticket)}>
-                            <td>{ticket.ticket_ref}</td>
-                            <td>{ticket.name}</td>
-                            <td>{ticket.issue}</td>
-                            <td>
-                                <span className={"priority " + ticket.priority}>
-                                    {ticket.priority}
-                                </span>
-                            </td>
-                            <td>{ticket.date}</td>
-                            <td>
-                                <span className={"status " + ticket.status}>
-                                    {ticket.status}
-                                </span>
-                            </td>
-                        </tr>
-                    ))}
-                    {displayedTickets.length === 0 && (
+            <div className="table-wrapper">
+                <table className="tickets-table">
+                    <thead>
                         <tr>
-                            <td colSpan="6" style={{ textAlign: 'center' }}>
-                                No tickets found.
-                            </td>
+                            <th>REFERENCE ID</th>
+                            <th>Name</th>
+                            <th>Issue</th>
+                            <th>Priority</th>
+                            <th>Date</th>
+                            <th>Status</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                        {displayedTickets.map(ticket => (
+                            <tr key={ticket.ticket_ref} onClick={() => setSelectedTicket(ticket)}>
+                                <td>{ticket.ticket_ref}</td>
+                                <td>{ticket.name}</td>
+                                <td>{ticket.issue}</td>
+                                <td>
+                                    <span className={"priority " + ticket.priority}>
+                                        {ticket.priority}
+                                    </span>
+                                </td>
+                                <td>{ticket.date}</td>
+                                <td>
+                                    <span className={"status " + ticket.status}>
+                                        {ticket.status}
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                        {displayedTickets.length === 0 && (
+                            <tr>
+                                <td colSpan="6" style={{ textAlign: 'center' }}>
+                                    No tickets found.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
             {filteredTickets.length > rowsPerPage && (
                 <div className="pagination">
                     <button onClick={handlePrev} disabled={currentPage === 1}>Prev</button>

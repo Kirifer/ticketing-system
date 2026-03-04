@@ -88,7 +88,7 @@ function StatusCards({loading}) {
       <div className="line-chart-container">
         <h3 className="chart-title">Tickets Submitted (Last 7 Days)</h3>
         <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={last7Days} margin={{ top: 20, right: 20, left: 20, bottom: 5 }}>
+          <LineChart data={last7Days} margin={{ top: 20, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
             <YAxis allowDecimals={false} domain={[0, 'dataMax + 2']} />

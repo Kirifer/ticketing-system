@@ -55,11 +55,11 @@ function History({loading}) {
                 </div>
                 {currentLogs.map(log => (
                     <div key={log.id} className="history-row">
-                        <span>{log.ticket_ref}</span>
-                        <span>{new Date(log.created_at).toLocaleString()}</span>
-                        <span>{log.action}</span>
-                        <span>{log.old_value}</span>
-                        <span>{log.new_value}</span>
+                        <span data-label="Reference ID">{log.ticket_ref}</span>
+                        <span data-label="Date & Time">{new Date(log.created_at).toLocaleString()}</span>
+                        <span data-label="Action">{log.action}</span>
+                        <span data-label="From">{log.old_value}</span>
+                        <span data-label="To">{log.new_value}</span>
                     </div>
                 ))}
 

@@ -1,7 +1,14 @@
 .admin-history-container {
   display: grid;
-  grid-template-columns: 0.2fr 1fr;
+  grid-template-columns: 1fr;
   height: 100vh;
   font-family: Arial, sans-serif;
   gap: 10px;
+  margin-left: 210px; 
+  padding: 20px;
+}
+@media (max-width: 768px) {
+  .admin-history-container{
+    margin-left: 70px;
+  }
 }
