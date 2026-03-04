@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import './NavBarAdmin.css'
+import dashboardImg from '../../assets/dashboard.png'
+import historyImg from '../../assets/history.png'
+import ticketImg from '../../assets/ticket.png'
 function NavBarAdmin({setLoading}){
     const navigate = useNavigate();
     const handleLogout = async () => {
@@ -15,19 +18,17 @@ function NavBarAdmin({setLoading}){
     };
     return(
         <div className='nav-panel-container'>
-                <div className="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
                 <div className='nav-panel'>
                     <Link to='/admin/dashboard'>
+                        <img src={dashboardImg} alt="Dashboard" className='admin-nav-icon'/>
                         <span>Dashboard</span>
                     </Link>
                     <Link to='/admin/tickets'>
+                        <img src={ticketImg} alt="Tickets" className='admin-nav-icon'/>
                         <span>Tickets</span>
                     </Link>
                     <Link to='/admin/history'>
+                        <img src={historyImg} alt="History" className='admin-nav-icon'/>
                         <span>History</span>
                     </Link>
                     <button onClick={handleLogout}>Logout</button>

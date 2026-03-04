@@ -1,51 +1,103 @@
-/* NAV PANEL */
+/* NAV PANEL CONTAINER */
 .nav-panel-container {
-  background: #1e293b;
+  background: #1e293b; /* dark slate for professional look */
   color: white;
   padding: 20px;
-  position: relative;
+  width: 220px; /* normal desktop width */
+  height: 100vh;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width 0.3s;
 }
-.nav-panel-container a{
+
+/* LINKS */
+.nav-panel-container a {
   text-decoration: none;
   color: white;
-}
-.hamburger {
-  width: 30px;
-  cursor: pointer;
-  margin-bottom: 30px;
-}
-
-.hamburger span {
-  display: block;
-  height: 3px;
-  background: white;
-  margin: 6px 0;
-  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.2s;
 }
 
+.nav-panel-container a:hover {
+  background: #293845; /* subtle highlight */
+  transform: translateX(5px);
+}
+
+/* PANEL */
 .nav-panel {
   display: flex;
-  justify-content: space-evenly;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
+/* LINK TEXT */
 .nav-panel span {
-  cursor: pointer;
-  transition: 0.2s;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s;
 }
 
 .nav-panel span:hover {
-  color: #38bdf8;
+  color: #38bdf8; /* accent color */
 }
 
+/* BUTTON */
 .nav-panel button {
-  margin-top: 20px;
-  padding: 8px;
+  padding: 10px;
   border: none;
   background: #ef4444;
   color: white;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s;
 }
 
+.nav-panel button:hover {
+  background: #dc2626;
+}
+
+/* ICONS */
+.admin-nav-icon {
+  height: 35px;
+  width: 35px;
+  transition: width 0.3s, height 0.3s;
+}
+
+/* Hover effect for icons */
+.admin-nav-icon:hover {
+  height: 40px;
+  width: 40px;
+}
+
+/* MEDIA QUERY: Small screens (<768px) */
+@media (max-width: 768px) {
+  .nav-panel-container {
+    width: 70px; /* slim sidebar */
+    padding: 15px 5px;
+  }
+
+  .nav-panel span {
+    display: none; /* hide text */
+  }
+
+  .nav-panel a {
+    justify-content: center; /* center icons only */
+  }
+
+  .admin-nav-icon {
+    height: 28px;
+    width: 28px;
+  }
+
+  .nav-panel button {
+    padding: 6px;
+    font-size: 12px;
+  }
+}

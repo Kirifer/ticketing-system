@@ -3,8 +3,10 @@ import './Tickets.css';
 
 function Tickets({ tickets, setSelectedTicket, loading }) {
     const [searchId, setSearchId] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 7;
 
-    const displayedTickets = useMemo(() => {
+    const filteredTickets = useMemo(() => {
         const filtered = searchId
             ? tickets.filter(ticket => ticket.ticket_ref.includes(searchId))
             : tickets;
@@ -14,6 +16,16 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
         return filtered.sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
     }, [tickets, searchId]);
 
+    const totalPages = Math.ceil(filteredTickets.length / rowsPerPage);
+
+    const displayedTickets = useMemo(() => {
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        return filteredTickets.slice(startIndex, startIndex + rowsPerPage);
+    }, [filteredTickets, currentPage]);
+
+    const handlePrev = () => setCurrentPage(prev => Math.max(prev - 1, 1));
+    const handleNext = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
+
     return (
         <div className='tickets-container'>
             <div className='tickets-title'>
@@ -21,24 +33,23 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
             </div>
 
             <div className='search-bar-container'>
-                <label htmlFor="search"></label>
                 <input
                     type="text"
-                    name="search"
-                    id="search"
                     placeholder='Enter Ref ID'
                     onChange={(e) => setSearchId(e.target.value)}
                     value={searchId}
                 />
             </div>
+
             <div className="loader-container">
                 {loading && (
-                <>
-                <div className="spinner"></div>
-                <p className="loading-text">Logging Out</p>
-                </>
+                    <>
+                        <div className="spinner"></div>
+                        <p className="loading-text">Loading...</p>
+                    </>
                 )}
             </div>
+
             <table className="tickets-table">
                 <thead>
                     <tr>
@@ -78,7 +89,16 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                     )}
                 </tbody>
             </table>
+
+            {filteredTickets.length > rowsPerPage && (
+                <div className="pagination">
+                    <button onClick={handlePrev} disabled={currentPage === 1}>Prev</button>
+                    <span>Page {currentPage} of {totalPages}</span>
+                    <button onClick={handleNext} disabled={currentPage === totalPages}>Next</button>
+                </div>
+            )}
         </div>
     );
 }
+
 export default Tickets;

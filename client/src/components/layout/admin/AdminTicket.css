@@ -1,6 +1,6 @@
 .admin-ticket-container {
   display: grid;
-  grid-template-columns: 220px 1fr 350px;
+  grid-template-columns: 0.2fr 1fr 350px;
   height: 100vh;
   font-family: Arial, sans-serif;
   gap: 10px;
