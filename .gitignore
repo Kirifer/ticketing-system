@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 # Hide the admin reset script
-server/resetAdminPassword.js
+server/createAdmin.js
 # Ignore everything in server/uploads
 server/uploads/*
 # Except the .gitkeep file

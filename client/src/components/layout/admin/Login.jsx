@@ -13,7 +13,6 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     try {
       const res = await fetch('http://localhost:5000/admin/login', {
         method: 'POST',

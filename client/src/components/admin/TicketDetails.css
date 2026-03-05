@@ -1,7 +1,7 @@
 .ticket-details-container {
-  background: #f8fafc;
+  min-height: 100vh;
   padding: 20px;
-  border-left: 1px solid #e2e8f0;
+  box-sizing: border-box;
   overflow-y: auto;
 }
 
@@ -123,5 +123,11 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 768px) {
+  .ticket-details-container {
+    width: calc(100% - 70px);
+    margin-left: 70px;
   }
 }

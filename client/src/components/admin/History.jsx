@@ -9,7 +9,7 @@ function History({loading}) {
     useEffect(() => {
         const fetchLogs = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/admin-logs");
+                const res = await fetch("http://localhost:5000/api/AdminLog", { credentials: 'include' });
                 const data = await res.json();
                 setLogs(data);
             } catch (err) {
