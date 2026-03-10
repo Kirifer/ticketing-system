@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admin {
+  id             Int        @id @default(autoincrement()) // Auto-increment
+  username       String
+  password       String
+  failedAttempts Int?       @default(0)
+  lockUntil      DateTime?
+  createdAt      DateTime   @default(now()) @map("created_at") // Default timestamp
+  logs           AdminLog[]
+}
+
+model AdminLog {
+  id        Int      @id @default(autoincrement()) // Auto-increment
+  action    String
+  oldValue  String?  @map("old_value")
+  newValue  String?  @map("new_value")
+  ticketRef String?  @map("ticket_ref")
+  createdAt DateTime @default(now()) @map("created_at") // Default timestamp
+  adminId   Int?
+  admin     Admin?   @relation(fields: [adminId], references: [id])
+}
+
+model Ticket {
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(100)
+  issue       String @db.VarChar(100)
+  description String @db.Text
+  priority    String @db.VarChar(50)
+  status      String @db.VarChar(50)
+  date        String @db.VarChar(50) // Consider changing to DateTime if storing timestamps
+  ticketRef   String @map("ticket_ref") @db.VarChar(100)
+  imagePath   String @map("image_path") @db.Text
+  email       String @db.VarChar(255)
+
+  @@map("tickets")
+}

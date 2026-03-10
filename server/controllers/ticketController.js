@@ -1,7 +1,7 @@
-const pool = require("../configs/db");     
-const transporter = require("../configs/email");
-   
-exports.createTicket = async (req, res) => {
+import pool from '../configs/db.js'
+import transporter from '../configs/email.js'
+
+export const createTicket = async (req, res) => {
   const { name, email, issue, description, priority, status, date, ticketRef } = req.body;
   const image_path = req.file ? req.file.filename : null;
 
@@ -123,7 +123,7 @@ exports.createTicket = async (req, res) => {
   }
 };
 
-exports.getTicketByRef = async (req, res) => {
+export const getTicketByRef = async (req, res) => {
   try {
     const ticketRef = req.params.ticketRef.trim();
     const result = await pool.query(
@@ -139,7 +139,7 @@ exports.getTicketByRef = async (req, res) => {
     res.status(500).json({message: "Server Error"})
   }
 }
-exports.getAllTickets = async (req, res)=>  {
+export const getAllTickets = async (req, res)=>  {
    try {
     const result = await pool.query("SELECT * FROM tickets ORDER BY date DESC");
     res.json(result.rows); 
@@ -149,7 +149,7 @@ exports.getAllTickets = async (req, res)=>  {
   }
 }
 
-exports.updateTicketPriority = async (req, res) => {
+export const updateTicketPriority = async (req, res) => {
 try {
     const { id } = req.params;
     const { priority } = req.body;
@@ -181,7 +181,7 @@ try {
     res.status(500).json({message: "Server Error"});
   }
 }
-exports.updateTicketStatus = async (req, res) =>{
+export const updateTicketStatus = async (req, res) =>{
   try {
     const { id } = req.params;
     const { status } = req.body;

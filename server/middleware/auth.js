@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from 'jsonwebtoken'
 
 const verifyAdmin = (req, res, next) => {
   const token = req.cookies.token;
@@ -16,4 +16,4 @@ const verifyAdmin = (req, res, next) => {
   }
 };
 
-module.exports = verifyAdmin;
+export default verifyAdmin;

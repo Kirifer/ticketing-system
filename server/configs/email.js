@@ -1,5 +1,8 @@
-require("dotenv").config();
-const nodemailer = require("nodemailer");
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
+
+dotenv.config();
+
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: Number(process.env.EMAIL_PORT),
@@ -17,4 +20,5 @@ transporter.verify((error, success) => {
     console.log("SMTP server is ready");
   }
 });
-module.exports = transporter;
+
+export default transporter;

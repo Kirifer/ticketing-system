@@ -1,7 +1,8 @@
-const express = require("express");
+import express from 'express'
+import getAdminLogs from '../controllers/adminLogsController.js'
+
 const router = express.Router();
-const adminLogsController = require("../controllers/adminLogsController");
 
-router.get("/", adminLogsController.getAdminLogs);
+router.get("/", getAdminLogs);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const pool = require('../configs/db');
-exports.getAdminLogs = async (req, res) => {
+import pool from '../configs/db.js'
+const getAdminLogs = async (req, res) => {
     try {
     const result = await pool.query(
       `SELECT * FROM "AdminLog" ORDER BY created_at DESC`
@@ -10,3 +10,4 @@ exports.getAdminLogs = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 }
+export default getAdminLogs;

@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const pool = require("../configs/db");
-const verifyAdmin = require("../middleware/auth");
+import express from 'express'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import pool from '../configs/db.js'
+import verifyAdmin from '../middleware/auth.js';
 
+const router = express.Router();
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -62,4 +62,5 @@ router.post('/logout', (req, res) => {
 router.get('/check-auth', verifyAdmin, (req, res) => {
   res.status(200).json({authenticated: true, admin: req.admin});
 });
-module.exports = router;
+
+export default router;
