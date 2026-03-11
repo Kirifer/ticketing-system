@@ -52,6 +52,7 @@ function TrackProgress(){
               {ticketData &&(
               <div className="track-info-box">
                 <p><b>Reference: </b>{ticketData.ticket_ref}</p>
+                <p><b>Department: </b>{ticketData.department}</p>
                 <p><b>Status: </b>{ticketData.status}</p>
                 <p><b>Issue: </b>{ticketData.issue}</p>
                 <p><b>Date Submitted:</b>{ticketData.date}</p>

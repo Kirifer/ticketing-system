@@ -91,6 +91,11 @@ const updateStatus = async (newStatus) => {
                     <span>{selectedTicket.email}</span>
                 </div>
 
+                 <div className="detail-group">
+                    <label>Department:</label>
+                    <span>{selectedTicket.department}</span>
+                </div>
+
                 <div className="detail-group">
                     <label>Priority:</label>
                     <select

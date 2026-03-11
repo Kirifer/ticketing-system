@@ -3364,6 +3364,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     issue: string | null
+    department: string | null
     description: string | null
     priority: string | null
     status: string | null
@@ -3377,6 +3378,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     issue: string | null
+    department: string | null
     description: string | null
     priority: string | null
     status: string | null
@@ -3390,6 +3392,7 @@ export namespace Prisma {
     id: number
     name: number
     issue: number
+    department: number
     description: number
     priority: number
     status: number
@@ -3413,6 +3416,7 @@ export namespace Prisma {
     id?: true
     name?: true
     issue?: true
+    department?: true
     description?: true
     priority?: true
     status?: true
@@ -3426,6 +3430,7 @@ export namespace Prisma {
     id?: true
     name?: true
     issue?: true
+    department?: true
     description?: true
     priority?: true
     status?: true
@@ -3439,6 +3444,7 @@ export namespace Prisma {
     id?: true
     name?: true
     issue?: true
+    department?: true
     description?: true
     priority?: true
     status?: true
@@ -3539,6 +3545,7 @@ export namespace Prisma {
     id: number
     name: string
     issue: string
+    department: string
     description: string
     priority: string
     status: string
@@ -3571,6 +3578,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     issue?: boolean
+    department?: boolean
     description?: boolean
     priority?: boolean
     status?: boolean
@@ -3584,6 +3592,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     issue?: boolean
+    department?: boolean
     description?: boolean
     priority?: boolean
     status?: boolean
@@ -3597,6 +3606,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     issue?: boolean
+    department?: boolean
     description?: boolean
     priority?: boolean
     status?: boolean
@@ -3610,6 +3620,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     issue?: boolean
+    department?: boolean
     description?: boolean
     priority?: boolean
     status?: boolean
@@ -3619,7 +3630,7 @@ export namespace Prisma {
     email?: boolean
   }
 
-  export type TicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "issue" | "description" | "priority" | "status" | "date" | "ticketRef" | "imagePath" | "email", ExtArgs["result"]["ticket"]>
+  export type TicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "issue" | "department" | "description" | "priority" | "status" | "date" | "ticketRef" | "imagePath" | "email", ExtArgs["result"]["ticket"]>
 
   export type $TicketPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Ticket"
@@ -3628,6 +3639,7 @@ export namespace Prisma {
       id: number
       name: string
       issue: string
+      department: string
       description: string
       priority: string
       status: string
@@ -4061,6 +4073,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Ticket", 'Int'>
     readonly name: FieldRef<"Ticket", 'String'>
     readonly issue: FieldRef<"Ticket", 'String'>
+    readonly department: FieldRef<"Ticket", 'String'>
     readonly description: FieldRef<"Ticket", 'String'>
     readonly priority: FieldRef<"Ticket", 'String'>
     readonly status: FieldRef<"Ticket", 'String'>
@@ -4477,6 +4490,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     issue: 'issue',
+    department: 'department',
     description: 'description',
     priority: 'priority',
     status: 'status',
@@ -4713,6 +4727,7 @@ export namespace Prisma {
     id?: IntFilter<"Ticket"> | number
     name?: StringFilter<"Ticket"> | string
     issue?: StringFilter<"Ticket"> | string
+    department?: StringFilter<"Ticket"> | string
     description?: StringFilter<"Ticket"> | string
     priority?: StringFilter<"Ticket"> | string
     status?: StringFilter<"Ticket"> | string
@@ -4726,6 +4741,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     issue?: SortOrder
+    department?: SortOrder
     description?: SortOrder
     priority?: SortOrder
     status?: SortOrder
@@ -4742,6 +4758,7 @@ export namespace Prisma {
     NOT?: TicketWhereInput | TicketWhereInput[]
     name?: StringFilter<"Ticket"> | string
     issue?: StringFilter<"Ticket"> | string
+    department?: StringFilter<"Ticket"> | string
     description?: StringFilter<"Ticket"> | string
     priority?: StringFilter<"Ticket"> | string
     status?: StringFilter<"Ticket"> | string
@@ -4755,6 +4772,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     issue?: SortOrder
+    department?: SortOrder
     description?: SortOrder
     priority?: SortOrder
     status?: SortOrder
@@ -4776,6 +4794,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Ticket"> | number
     name?: StringWithAggregatesFilter<"Ticket"> | string
     issue?: StringWithAggregatesFilter<"Ticket"> | string
+    department?: StringWithAggregatesFilter<"Ticket"> | string
     description?: StringWithAggregatesFilter<"Ticket"> | string
     priority?: StringWithAggregatesFilter<"Ticket"> | string
     status?: StringWithAggregatesFilter<"Ticket"> | string
@@ -4918,6 +4937,7 @@ export namespace Prisma {
   export type TicketCreateInput = {
     name: string
     issue: string
+    department: string
     description: string
     priority: string
     status: string
@@ -4931,6 +4951,7 @@ export namespace Prisma {
     id?: number
     name: string
     issue: string
+    department: string
     description: string
     priority: string
     status: string
@@ -4943,6 +4964,7 @@ export namespace Prisma {
   export type TicketUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     issue?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -4956,6 +4978,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     issue?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -4969,6 +4992,7 @@ export namespace Prisma {
     id?: number
     name: string
     issue: string
+    department: string
     description: string
     priority: string
     status: string
@@ -4981,6 +5005,7 @@ export namespace Prisma {
   export type TicketUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     issue?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -4994,6 +5019,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     issue?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -5274,6 +5300,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     issue?: SortOrder
+    department?: SortOrder
     description?: SortOrder
     priority?: SortOrder
     status?: SortOrder
@@ -5291,6 +5318,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     issue?: SortOrder
+    department?: SortOrder
     description?: SortOrder
     priority?: SortOrder
     status?: SortOrder
@@ -5304,6 +5332,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     issue?: SortOrder
+    department?: SortOrder
     description?: SortOrder
     priority?: SortOrder
     status?: SortOrder

@@ -26,6 +26,7 @@ CREATE TABLE "AdminLog" (
 CREATE TABLE "tickets" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(100) NOT NULL,
+    "department" VARCHAR(100) NOT NULL,
     "issue" VARCHAR(100) NOT NULL,
     "description" TEXT NOT NULL,
     "priority" VARCHAR(50) NOT NULL,

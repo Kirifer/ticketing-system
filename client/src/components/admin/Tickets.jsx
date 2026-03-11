@@ -56,6 +56,7 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                         <tr>
                             <th>REFERENCE ID</th>
                             <th>Name</th>
+                            <th>Department</th>
                             <th>Issue</th>
                             <th>Priority</th>
                             <th>Date</th>
@@ -67,6 +68,7 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                             <tr key={ticket.ticket_ref} onClick={() => setSelectedTicket(ticket)}>
                                 <td>{ticket.ticket_ref}</td>
                                 <td>{ticket.name}</td>
+                                <td>{ticket.department}</td>
                                 <td>{ticket.issue}</td>
                                 <td>
                                     <span className={"priority " + ticket.priority}>

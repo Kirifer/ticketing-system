@@ -2,16 +2,16 @@ import pool from '../configs/db.js'
 import transporter from '../configs/email.js'
 
 export const createTicket = async (req, res) => {
-  const { name, email, issue, description, priority, status, date, ticketRef } = req.body;
+  const { name, email, department, issue, description, priority, status, date, ticketRef } = req.body;
   const image_path = req.file ? req.file.filename : null;
 
   try {
     const newTicket = await pool.query(
       `INSERT INTO tickets 
-      (name, email, issue, description, priority, status, date, ticket_ref, image_path) 
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) 
+      (name, email, department, issue, description, priority, status, date, ticket_ref, image_path) 
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) 
       RETURNING *`,
-      [name, email, issue, description, priority, status, date, ticketRef, image_path]
+      [name, email, department, issue, description, priority, status, date, ticketRef, image_path]
     );
 
     
@@ -64,6 +64,10 @@ export const createTicket = async (req, res) => {
                               <tr>
                                 <td><strong>Email:</strong></td>
                                 <td>${email}</td>
+                              </tr>
+                              <tr>
+                                <td><strong>Department:</strong></td>
+                                <td>${department}</td>
                               </tr>
                               <tr>
                                 <td><strong>Issue:</strong></td>

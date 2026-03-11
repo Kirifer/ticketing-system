@@ -10,6 +10,7 @@ function TicketForm(){
     const [ticket, setTicket] = useState({
         name: '',
         issue: '',
+        department: '', 
         description: '',
         priority: '',
         status: '',
@@ -35,6 +36,7 @@ function TicketForm(){
 
         formData.append("name", ticket.name);
         formData.append("issue", ticket.issue);
+        formData.append("department", ticket.department); 
         formData.append("description", ticket.description);
         formData.append("priority", ticket.priority);
         formData.append("status", "Open");    
@@ -54,6 +56,7 @@ function TicketForm(){
             setTicket({
                 name: '',
                 issue: '',
+                department: '',
                 description: '',
                 priority: '',
                 status: '',
@@ -112,6 +115,24 @@ function TicketForm(){
                                 <option value="Hardware">Hardware</option>
                                 <option value="Software">Software</option>
                                 <option value="Network">Network</option>
+                            </select>
+                        </div>
+
+                        <div className='input-container'>
+                            <label htmlFor="department">Department: </label>
+                            <select
+                                required 
+                                id='department'
+                                name="department"
+                                value={ticket.department}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select Department</option>
+                                <option value="HR">Human Resources (HR)</option>
+                                <option value="IT">Information Technology (IT)</option>
+                                <option value="Accounting">Accounting</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Operations">Operations</option>
                             </select>
                         </div>
 

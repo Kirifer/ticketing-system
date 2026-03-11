@@ -32,6 +32,7 @@ model Ticket {
   id          Int      @id @default(autoincrement())
   name        String   @db.VarChar(100)
   issue       String   @db.VarChar(100)
+  department  String   @db.VarChar(100)
   description String   @db.Text
   priority    String   @db.VarChar(50)
   status      String   @db.VarChar(50)

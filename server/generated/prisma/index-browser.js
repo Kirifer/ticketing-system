@@ -143,6 +143,7 @@ exports.Prisma.TicketScalarFieldEnum = {
   id: 'id',
   name: 'name',
   issue: 'issue',
+  department: 'department',
   description: 'description',
   priority: 'priority',
   status: 'status',
