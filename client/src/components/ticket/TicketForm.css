@@ -123,3 +123,58 @@ button[type="submit"]:hover {
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --- ADDED: Success View Styling --- */
+.success-container {
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-icon {
+    font-size: 3.5rem;
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+.ref-number {
+    font-family: monospace;
+    font-size: 1.4rem;
+    font-weight: bold;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px dashed #007bff;
+    margin: 15px 0;
+    color: #333;
+}
+
+.success-note {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.back-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

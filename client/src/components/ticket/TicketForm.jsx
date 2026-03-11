@@ -7,6 +7,9 @@ function TicketForm(){
     const [loading, setLoading] = useState(false);
     const [fileInputKey, setFileInputKey] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
+    // --- ADDED: State to track if ticket was successfully submitted ---
+    const [submittedTicket, setSubmittedTicket] = useState(null); 
+    
     const [ticket, setTicket] = useState({
         name: '',
         issue: '',
@@ -51,7 +54,8 @@ function TicketForm(){
         try {
             await axios.post("http://localhost:5000/api/tickets", formData);
 
-            alert("Ticket submitted successfully!");
+            // --- CHANGED: Removed alert and set the reference number to state ---
+            setSubmittedTicket(newTicketRef); 
 
             setTicket({
                 name: '',
@@ -86,6 +90,21 @@ function TicketForm(){
                     <div className="loader-container">
                         <div className="spinner"></div>
                         <p className="loading-text">Uploading...</p>
+                    </div>
+                ) : submittedTicket ? (
+                    // --- ADDED: Success View when submittedTicket has a value ---
+                    <div className="success-container">
+                        <div className="success-icon">✔</div>
+                        <h2>Ticket Submitted!</h2>
+                        <p>Your reference number is:</p>
+                        <div className="ref-number">{submittedTicket}</div>
+                        <p className="success-note">Please check your email for updates.</p>
+                        <button 
+                            className="back-btn" 
+                            onClick={() => setSubmittedTicket(null)}
+                        >
+                            Submit Another Ticket
+                        </button>
                     </div>
                 ) : (
                     <form onSubmit={handleSubmit}>
