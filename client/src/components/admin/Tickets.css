@@ -1,6 +1,6 @@
 .tickets-container {
-  width: calc(100% - 220px);
-  margin-left: 220px;
+  width: calc(100% - 200px);
+  margin-left: 230px;
   min-height: 100vh; 
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%; /* take full width */
+  width: 100%;
 }
 
 .search-bar-container input[type="text"] {
@@ -33,7 +33,7 @@
 }
 
 .tickets-table {
-  width: 100%; /* full width of container */
+  width: 100%;
   border-collapse: collapse;
   background: white;
   border-radius: 10px;
@@ -66,7 +66,6 @@
   cursor: pointer;
 }
 
-/* Priority Badges */
 .priority {
   padding: 4px 10px;
   border-radius: 20px;
@@ -88,7 +87,6 @@
   color: green;
 }
 
-/* Status Badges */
 .status {
   padding: 4px 10px;
   border-radius: 20px;
@@ -116,7 +114,6 @@
   color: #ffffff;
 }
 
-/* Pagination */
 .pagination {
   display: flex;
   justify-content: center;
@@ -150,12 +147,6 @@
 .pagination span {
   font-weight: bold;
   color: #555;
-}
-
-/* Make table scrollable on small screens */
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
 }
 
 @media (max-width: 768px) {

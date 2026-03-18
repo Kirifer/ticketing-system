@@ -1,95 +1,110 @@
-/* NAV PANEL CONTAINER */
-
 .nav-panel-container {
-  background: #1e293b; 
+  background: #1e293b;
   color: white;
-  width: 220px; 
-  height: 100vh;          
+  width: 220px;
+  height: 100vh;
   box-shadow: 2px 0 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: center;
+  justify-content: space-between;
+  padding: 20px 15px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   transition: width 0.3s;
-  position: fixed;        
-  top: 0;                 
-  left: 0;                
-  z-index: 1000;          
-}
-.its-logo{
-  height: 80px;
-  width: 80px;
-  margin-bottom: 10px;
-}
-/* LINKS */
-.nav-panel-container a {
-  text-decoration: none;
-  color: white;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 10px;
-  border-radius: 8px;
-  transition: background 0.2s, transform 0.2s;
 }
 
-.nav-panel-container a:hover {
-  background: #293845;
-  transform: translateX(5px);
+.its-logo {
+  height: 60px; 
+  width: auto;
+  display: block;
+  margin: 0 auto 30px auto;
 }
 
-/* PANEL */
 .nav-panel {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.nav-panel-container a {
+  text-decoration: none;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
   gap: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-panel-container a:hover {
+  background: #334155;
+  color: white;
+  transform: translateX(5px);
 }
 
 .nav-panel span {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  transition: color 0.2s;
 }
 
-.nav-panel span:hover {
-  color: #38bdf8;
+.admin-nav-icon {
+  height: 24px; 
+  width: 24px;
+  object-fit: contain;
+  transition: transform 0.2s;
 }
 
-/* BUTTON */
-.nav-panel button {
-  padding: 10px;
+.nav-panel-container a:hover .admin-nav-icon {
+  transform: scale(1.1);
+}
+
+.bottom-section {
+  padding-top: 20px;
+  border-top: 1px solid #334155;
+  margin-top: 20px;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 12px;
   border: none;
   background: #ef4444;
   color: white;
   cursor: pointer;
   border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 14px;
   transition: background 0.2s;
 }
 
-.nav-panel button:hover {
+.logout-btn:hover {
   background: #dc2626;
-}
-.admin-nav-icon {
-  height: 35px;
-  width: 35px;
-  transition: width 0.3s, height 0.3s;
-}
-
-
-.admin-nav-icon:hover {
-  height: 40px;
-  width: 40px;
 }
 
 @media (max-width: 768px) {
   .nav-panel-container {
-    width: 70px; 
-    padding: 15px 5px;
+    width: 75px; 
+    padding: 20px 10px;
+    align-items: center;
   }
 
-  .nav-panel span {
-    display: none; 
+  .nav-panel span, 
+  .bottom-section span {
+    display: none;
+  }
+
+  .its-logo {
+    height: 40px;
+    margin-bottom: 20px;
+  }
+
+  .nav-panel-container a {
+    justify-content: center; 
+    padding: 15px 0;
   }
 
   .admin-nav-icon {
@@ -97,8 +112,8 @@
     width: 28px;
   }
 
-  .nav-panel button {
-    padding: 6px;
-    font-size: 12px;
+  .logout-btn {
+    padding: 10px 5px;
+    font-size: 10px;
   }
 }

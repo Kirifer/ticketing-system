@@ -4,33 +4,31 @@ import './Tickets.css';
 function Tickets({ tickets, setSelectedTicket, loading }) {
     const [searchId, setSearchId] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
-    const [priorityFilter, setPriorityFilter] = useState(''); 
+    const [priorityFilter, setPriorityFilter] = useState('');
+    const [deptFilter, setDeptFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 7;
 
-    const filteredTickets = useMemo(() => {
-        let filtered = tickets;
+    const departments = useMemo(() => {
+        if (!tickets) return [];
+        return [...new Set(tickets.map(t => t.department))].sort();
+    }, [tickets]);
 
-        
+    const filteredTickets = useMemo(() => {
+        let filtered = tickets || [];
+
         if (searchId) {
             filtered = filtered.filter(ticket => 
                 ticket.ticket_ref.toLowerCase().includes(searchId.toLowerCase())
             );
         }
 
-        
-        if (statusFilter) {
-            filtered = filtered.filter(ticket => ticket.status === statusFilter);
-        }
-
-        
-        if (priorityFilter) {
-            filtered = filtered.filter(ticket => ticket.priority === priorityFilter);
-        }
+        if (statusFilter) filtered = filtered.filter(t => t.status === statusFilter);
+        if (priorityFilter) filtered = filtered.filter(t => t.priority === priorityFilter);
+        if (deptFilter) filtered = filtered.filter(t => t.department === deptFilter);
 
         const priorityOrder = { High: 3, Medium: 2, Low: 1 };
 
-        
         return [...filtered].sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
@@ -38,7 +36,7 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
 
             return (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0);
         });
-    }, [tickets, searchId, statusFilter, priorityFilter]);
+    }, [tickets, searchId, statusFilter, priorityFilter, deptFilter]);
 
     const totalPages = Math.ceil(filteredTickets.length / rowsPerPage);
 
@@ -56,7 +54,8 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
         border: '1px solid #cbd5e1',
         backgroundColor: 'white',
         cursor: 'pointer',
-        outline: 'none'
+        outline: 'none',
+        fontSize: '14px'
     };
 
     return (
@@ -65,7 +64,7 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                 <h1>Tickets</h1>
             </div>
 
-            <div className='search-bar-container' style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <div className='search-bar-container' style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
                 <input
                     type="text"
                     placeholder='Enter Ref ID'
@@ -74,17 +73,23 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                         setCurrentPage(1);
                     }}
                     value={searchId}
-                    style={{ flex: 1 }}
+                    style={{ flex: 2, minWidth: '200px' }}
                 />
                 
-                
                 <select 
-                    className="priority-filter-dropdown"
+                    value={deptFilter}
+                    onChange={(e) => { setDeptFilter(e.target.value); setCurrentPage(1); }}
+                    style={dropdownStyle}
+                >
+                    <option value="">All Departments</option>
+                    {departments.map(dept => (
+                        <option key={dept} value={dept}>{dept}</option>
+                    ))}
+                </select>
+
+                <select 
                     value={priorityFilter}
-                    onChange={(e) => {
-                        setPriorityFilter(e.target.value);
-                        setCurrentPage(1);
-                    }}
+                    onChange={(e) => { setPriorityFilter(e.target.value); setCurrentPage(1); }}
                     style={dropdownStyle}
                 >
                     <option value="">All Priorities</option>
@@ -93,14 +98,9 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                     <option value="Low">Low</option>
                 </select>
 
-   
                 <select 
-                    className="status-filter-dropdown"
                     value={statusFilter}
-                    onChange={(e) => {
-                        setStatusFilter(e.target.value);
-                        setCurrentPage(1);
-                    }}
+                    onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}
                     style={dropdownStyle}
                 >
                     <option value="">All Statuses</option>
@@ -138,10 +138,12 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                         {displayedTickets.map((ticket, index) => (
                             <tr key={ticket.ticket_ref} onClick={() => setSelectedTicket(ticket)}>
                                 <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
-                                <td>{ticket.ticket_ref}</td>
+                                <td style={{ fontWeight: 'bold', color: '#0a0b0b' }}>{ticket.ticket_ref}</td>
                                 <td>{ticket.name}</td>
                                 <td>{ticket.department}</td>
-                                <td>{ticket.issue}</td>
+                                <td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                    {ticket.issue}
+                                </td>
                                 <td>
                                     <span className={"priority " + ticket.priority}>
                                         {ticket.priority}
@@ -157,8 +159,8 @@ function Tickets({ tickets, setSelectedTicket, loading }) {
                         ))}
                         {displayedTickets.length === 0 && !loading && (
                             <tr>
-                                <td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>
-                                    No tickets found.
+                                <td colSpan="8" style={{ textAlign: 'center', padding: '40px', color: '#94a3b8' }}>
+                                    No tickets found matching your filters.
                                 </td>
                             </tr>
                         )}

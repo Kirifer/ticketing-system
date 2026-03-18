@@ -5,6 +5,7 @@ import dashboardImg from '../../assets/dashboard.png'
 import historyImg from '../../assets/history.png'
 import ticketImg from '../../assets/ticket.png'
 import ITSlogo from '../../../ITS-LOGO-NOBG.png'
+
 function NavBarAdmin({setLoading}){
     const navigate = useNavigate();
     const handleLogout = async () => {
@@ -14,26 +15,33 @@ function NavBarAdmin({setLoading}){
             credentials: "include"
         });
         setTimeout(() => {
-        navigate("/admin/login");
+            navigate("/admin/login");
         }, 2000);
     };
+
     return(
         <div className='nav-panel-container'>
-            <img className='its-logo' src={ITSlogo} alt="Logo" />
-            <div className='nav-panel'>
-                <Link to='/admin/dashboard'>
-                    <img src={dashboardImg} alt="Dashboard" className='admin-nav-icon'/>
-                    <span>Dashboard</span>
-                </Link>
-                <Link to='/admin/tickets'>
-                    <img src={ticketImg} alt="Tickets" className='admin-nav-icon'/>
-                    <span>Tickets</span>
-                </Link>
-                <Link to='/admin/history'>
-                    <img src={historyImg} alt="History" className='admin-nav-icon'/>
-                    <span>History</span>
-                </Link>
-                <button onClick={handleLogout}>Logout</button>
+            <div className='top-section'>
+                <img className='its-logo' src={ITSlogo} alt="Logo" />
+                
+                <div className='nav-panel'>
+                    <Link to='/admin/dashboard'>
+                        <img src={dashboardImg} alt="Dashboard" className='admin-nav-icon'/>
+                        <span>Dashboard</span>
+                    </Link>
+                    <Link to='/admin/tickets'>
+                        <img src={ticketImg} alt="Tickets" className='admin-nav-icon'/>
+                        <span>Tickets</span>
+                    </Link>
+                    <Link to='/admin/history'>
+                        <img src={historyImg} alt="History" className='admin-nav-icon'/>
+                        <span>History</span>
+                    </Link>
+                </div>
+            </div>
+
+            <div className='bottom-section'>
+                <button className="logout-btn" onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );
