@@ -128,8 +128,6 @@ button[type="submit"]:hover {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
-/* --- ADDED: Success View Styling --- */
 .success-container {
     text-align: center;
     padding: 20px;

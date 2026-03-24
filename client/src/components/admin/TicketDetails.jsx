@@ -72,7 +72,6 @@ function TicketDetails({ setTickets, setSelectedTicket, selectedTicket }) {
 
                     <div className="detail-group">
                         <label>Priority:</label>
-                        {/* CHANGED FROM SELECT TO PLAIN TEXT BADGE */}
                         <span className={`priority-value ${selectedTicket.priority}`}>
                             {selectedTicket.priority}
                         </span>
