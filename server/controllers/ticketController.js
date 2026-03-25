@@ -185,20 +185,25 @@ try {
     res.status(500).json({message: "Server Error"});
   }
 }
-export const updateTicketStatus = async (req, res) =>{
+export const updateTicketStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
 
+    if (!status) {
+      return res.status(400).json({ message: "Status is required" });
+    }
+
     const current = await pool.query(
-      "SELECT status, ticket_ref FROM tickets WHERE id = $1",
+      "SELECT name, email, status, ticket_ref FROM tickets WHERE id = $1",
       [id]
     );
 
-    if (current.rows.length === 0) return res.status(404).json({message: "Ticket not found"});
+    if (current.rows.length === 0) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
 
-    const oldStatus = current.rows[0].status;
-    const ticketRef = current.rows[0].ticket_ref;
+    const { name, email, status: oldStatus, ticket_ref: ticketRef } = current.rows[0];
 
     const updated = await pool.query(
       "UPDATE tickets SET status = $1 WHERE id = $2 RETURNING *",
@@ -211,10 +216,86 @@ export const updateTicketStatus = async (req, res) =>{
       [ticketRef, "Status Change", oldStatus, status]
     );
 
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Ticket Update",
+      html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8" />
+        <title>Ticket Status Update</title>
+      </head>
+      <body style="margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, sans-serif;">
+
+        <table width="100%" cellpadding="0" cellspacing="0" style="padding: 20px;">
+          <tr>
+            <td align="center">
+
+              <table width="600" cellpadding="0" cellspacing="0"
+                style="background:#ffffff; border-radius:10px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+
+                <tr>
+                  <td style="background:#1e293b; padding:20px; text-align:center;">
+                    <h2 style="color:#ffffff; margin:0;">Ticket Status Update</h2>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:30px; color:#334155;">
+
+                    <p style="font-size:16px;">Hello <strong>${name}</strong>,</p>
+
+                    <p style="font-size:15px; line-height:1.6;">
+                      This is to notify you that your support ticket status has been updated.
+                    </p>
+
+                    <hr style="border:none; border-top:1px solid #e2e8f0; margin:20px 0;" />
+
+                    <table width="100%" cellpadding="8" cellspacing="0" style="font-size:14px;">
+                      <tr>
+                        <td><strong>Ticket ID:</strong></td>
+                        <td style="color:#2563eb;"><strong>${ticketRef}</strong></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Status:</strong></td>
+                        <td style="color:#16a34a;"><strong>${status}</strong></td>
+                      </tr>
+                    </table>
+
+                    <hr style="border:none; border-top:1px solid #e2e8f0; margin:20px 0;" />
+
+                    <p style="font-size:14px; color:#64748b;">
+                      Please visit the website if you want to check more details about your ticket.
+                    </p>
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="background:#f1f5f9; text-align:center; padding:15px; font-size:12px; color:#64748b;">
+                    © ${new Date().getFullYear()} ITSquareHub Support Team
+                    <br />
+                    This is an automated message. Please do not reply directly.
+                  </td>
+                </tr>
+
+              </table>
+
+            </td>
+          </tr>
+        </table>
+
+      </body>
+      </html>
+      `
+    });
+
     res.json(updated.rows[0]);
 
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
   }
-}
+};
